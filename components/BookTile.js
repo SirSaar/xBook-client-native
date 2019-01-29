@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Linking } from 'react-native';
+import { StyleSheet, Text, View, Image, Linking, Button } from 'react-native';
 
 export default bookTile = (props) => {
     return (
@@ -8,7 +8,7 @@ export default bookTile = (props) => {
             <Text style={{fontSize:8}}>{props.book.author}</Text>
             <Image source={{uri: props.book.thumbnail, width: 64, height: 64}} />
             <Button
-            onPress={() => _goToURL(props.book.readmore)}
+            onPress={() => _goToURL(props.book.more)}
             title="Read More..."
           />
         </View>
