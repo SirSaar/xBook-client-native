@@ -32,6 +32,7 @@ export default class BookTile extends Component {
 
 const styles = StyleSheet.create({
     rowContainer: {
+        flex: 1,
         flexDirection: 'row',
         backgroundColor: '#FFF',
         height: 100,

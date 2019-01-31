@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Dimensions, Platform} from 'react-native';
-import {createAppContainer, StackNavigator, createStackNavigator, createBottomTabNavigator, withNavigation} from 'react-navigation';
-import {Icon} from 'react-native-elements';
+import React, { Component } from 'react';
+import { Dimensions, Platform } from 'react-native';
+import { createAppContainer, StackNavigator, createStackNavigator, createBottomTabNavigator, withNavigation } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import AddBook from './components/AddBook';
 
@@ -25,23 +25,24 @@ const AppNavigator = createBottomTabNavigator({
         screen: AddBookStack,
         navigationOptions: {
             tabBarLabel: 'Add Book',
-            tabBarIcon: ({tintColor}) => <Icon name="ios-add-circle-outline" type="ionicon" size={24}
-                                               color={tintColor}/>
-        },
+            tabBarIcon: ({ tintColor }) => <Icon name="ios-search-outline" type="ionicon" size={24}
+                color={tintColor} />
+        }
     },
+},
     {
         tabBarOptions: {
-          activeTintColor: 'red',
-          inactiveTintColor: 'grey',
-          style: {
-            backgroundColor: 'white',
-            borderTopWidth: 0,
-            shadowOffset: { width: 5, height: 3 },
-            shadowColor: 'black',
-            shadowOpacity: 0.5,
-            elevation: 5
-          }
+            activeTintColor: 'red',
+            inactiveTintColor: 'grey',
+            style: {
+                backgroundColor: 'white',
+                borderTopWidth: 0,
+                shadowOffset: { width: 5, height: 3 },
+                shadowColor: 'black',
+                shadowOpacity: 0.5,
+                elevation: 5
+            }
         }
-});
+    });
 
 export const AppContainer = createAppContainer(AppNavigator);

@@ -45,10 +45,9 @@ export default class AddBook extends React.Component {
   render() {
     return (
         <View style={styles.container}>
-          <SearchBar
+          <TextInput
             placeholder="Enter your book name..."
             onChangeText={this.searchBook}
-            value=''
           />
           {this.state.isLoading ? 
             ( <ActivityIndicator size="large" color="#0000ff" /> ) :
