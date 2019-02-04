@@ -6,30 +6,29 @@ export default class AddBook extends React.Component {
   render() {
     const { navigation } = this.props;
     const book = navigation.getParam('book', null);
-    console.log(book);
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, marginTop: 10}}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
         <Card
         title={book.title}
         image={book.thumbnail ? {uri: book.thumbnail} : undefined}
-        imageStyle={{height: 350}}>
+        imageStyle={{height: 250}}>
             <Text style={{marginBottom: 10}}>
                 Author: {book.author}
             </Text>
-            <View style={{flex:1}}>
-                <Button
-                    icon={<Icon name='ios-book' type='ionicon' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='Reading' />
-                <Button
-                    icon={<Icon name='library-add' type='MaterialIcons' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='Add to Shelf' />
-            </View>
+
+            <Button
+                icon={<Icon name='ios-book' type='ionicon' color='#ffffff' containerStyle={{marginRight: 7}} />}
+                buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 8, backgroundColor: '#E68523'}}
+                title='Reading'
+                onPress={()=>console.log()} />
+            <Button
+                icon={<Icon name='library-add' type='MaterialIcons' color='#ffffff' containerStyle={{marginRight: 5}} />}
+                buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: '#00A0DC'}}
+                title='Add to Shelf'
+                onPress={()=>console.log()} />
+
         </Card>
         </View>
       </SafeAreaView>

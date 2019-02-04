@@ -37,9 +37,8 @@ export default class BookTile extends Component {
 const styles = StyleSheet.create({
     container: {
         padding: 1,
-        borderWidth: 0.5,
+        borderBottomWidth: 1,
         borderColor: '#DCDCDC',
-        borderTopWidth: 0,
     },
     rowContainer: {
         height: 80,

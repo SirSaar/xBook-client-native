@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text,TextInput, View,FlatList, ActivityIndicator,SafeAreaView } from 'react-native';
 import BookTile from './components/BookTile';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { DotsLoader } from 'react-native-indicator';
+import {searchBook} from '../services/book.serivce';
 
 export default class SearchBook extends React.Component {
   state = {search: '', books: [], isLoading: false, bookSelected: null};
@@ -12,33 +14,13 @@ export default class SearchBook extends React.Component {
       this.setState({isLoading: true});
       setTimeout(()=> {
         this.state.search === bookName &&
-        this.googleBook(bookName)
+        searchBook(bookName)
         .then(books => this.setState({books, isLoading: false}))
         .catch(console.log);
       },2);
     } else {
       this.setState({books: [], isLoading: false});
     }
-  }
-
-  googleBook = async (bookName) => {
-      const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookName}`);
-      
-      const resJson = await res.json();
-
-      const books = resJson.items;
-      if(!books) return this.setState({books: [], isLoading: false});
-      const fewBooks = books.slice(0, 4);
-      const formattedBooks = fewBooks.map((book) => {
-          const newBook={};
-          newBook.id=book.id;
-          newBook.title=book.volumeInfo.title;
-          newBook.thumbnail=book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail
-          newBook.author=book.volumeInfo.authors && book.volumeInfo.authors.join(', ');
-          newBook.more=book.volumeInfo.infoLink;
-          return newBook;
-        })
-      return formattedBooks;
   }
 
   _onSelectBook = book => {
@@ -61,12 +43,15 @@ export default class SearchBook extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1,justifyContent: 'flex-start', marginTop: 20}}>
-          <View style={{ flex: 1,justifyContent: 'flex-start', backgroundColor: 'white', marginHorizontal: 20 }}>
+          <View style={{ flex: 1,justifyContent: 'flex-start', alignContent: 'center', backgroundColor: 'white', marginHorizontal: 20 }}>
               <View style={{
-                  flexDirection: 'row', padding: 10,
+                  flexDirection: 'row', 
+                  padding: 10,
                   backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  borderColor: '#DCDCDC',
+                  shadowOffset: { width: 0, height: 0 },
+                  shadowColor: 'black',
+                  shadowOpacity: 0.2,
+                  elevation: 1,
               }}>
                   <Icon name="ios-search" size={20} style={{ marginRight: 10 }} />
                   <TextInput
@@ -79,7 +64,7 @@ export default class SearchBook extends React.Component {
                   />
               </View>
             {this.state.isLoading ? 
-              ( <ActivityIndicator style={{ flex: 1, justifyContent: "flex-start", marginTop: 20 }} size="large" color="#0000ff" /> ) :
+              ( <View style={{ marginTop: 50,flex: 1,alignItems: 'center'}} ><DotsLoader color="#00A0DC" size={30} /></View> ) :
               ( this.state.books && this.state.books.map(this._renderBook) )
             }
           </View>
