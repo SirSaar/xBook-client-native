@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text,TextInput, View,FlatList, ActivityIndicator,SafeAreaView } from 'react-native';
 import BookSearchTile from '../components/BookSearchTile';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements';
 import { DotsLoader } from 'react-native-indicator';
-import {searchBook} from '../services/book.serivce';
+import {searchBook} from '../services/bookDetailes.serivce';
 
 export default class SearchBook extends React.Component {
   state = {search: '', books: [], isLoading: false, bookSelected: null};

@@ -8,22 +8,28 @@ import {
     Platform,
     StatusBar,
     ScrollView,
+    Button,
     Image,
     Dimensions
 } from "react-native";
 import BookTile from '../components/BookTile';
 
-import { getReading } from "../services/user.service";
+import { getReading, addToShelf } from "../services/user.service";
 import { currentUser } from "../models/users";
-import { getBooks } from "../services/book.service";
+import { getBooks } from "../services/bookDetails.service";
 
 const { height, width } = Dimensions.get('window')
 class Reading extends Component {
     constructor(props) {
         super(props);
         getReading(currentUser)
-        .then(getBooks)
         .then(books => this.setState({books}));
+    }
+
+    _onAddToShelf = async (id) => {
+        await addToShelf(id);
+        const books = await getReading(currentUser);
+        this.setState({books});
     }
 
     render() {
@@ -31,12 +37,18 @@ class Reading extends Component {
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView>
                     <View style={{ paddingHorizontal: 20, marginTop: 20, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                        <BookTile width={width}
-                            name="The Cozy Place"
-                            type="PRIVATE ROOM - 2 BEDS"
-                            price={82}
-                            rating={4}
-                        />
+                    {
+                        this.state.books && 
+                        this.state.books.map(book => 
+                            <BookTile width={width}
+                            title={book.title}
+                            author={book.author}
+                            thumbnail={book.thumbnail}
+                            >
+                            <Button onPress={()=> this._onAddToShelf(bood.id)}>Add to Shelf</Button>
+                            </BookTile>
+                        )
+                    }
                     </View>
                 </ScrollView>
             </SafeAreaView>

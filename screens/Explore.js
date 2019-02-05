@@ -11,7 +11,6 @@ import {
     Image,
     Dimensions
 } from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons'
 import Category from './components/Explore/Category'
 import Home from './components/Explore/Home'
 const { height, width } = Dimensions.get('window')

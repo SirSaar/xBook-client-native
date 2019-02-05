@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements';
 
 import SearchBook from './screens/SearchBook';
 import AddBook from './screens/AddBook';
+import Reading from './screens/Reading';
 
 const AddBookStack = createStackNavigator({
     SearchBook: {
@@ -39,7 +40,7 @@ const AppNavigator = createBottomTabNavigator({
         }
     },
     'Reading': {
-        screen: AddBookStack,
+        screen: Reading,
         navigationOptions: {
             tabBarLabel: 'Reading',
             tabBarIcon: ({ tintColor }) => <Icon name="ios-book" type="ionicon" size={24}
@@ -49,7 +50,7 @@ const AppNavigator = createBottomTabNavigator({
     'Shelf': {
         screen: AddBookStack,
         navigationOptions: {
-            tabBarLabel: 'Shelf',
+            tabBarLabel: 'Bookshelf',
             tabBarIcon: ({ tintColor }) => <Icon name='library-books' type='MaterialIcons' size={24}
                 color={tintColor} />
         }
