@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { createAppContainer, StackNavigator, createStackNavigator, createBottomTabNavigator, withNavigation } from 'react-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements';
 
 import SearchBook from './screens/SearchBook';
 import AddBook from './screens/AddBook';
@@ -22,10 +22,10 @@ const AddBookStack = createStackNavigator({
 });
 
 const AppNavigator = createBottomTabNavigator({
-    'FindBook': {
+    'Explore': {
         screen: AddBookStack,
         navigationOptions: {
-            tabBarLabel: 'Find Book',
+            tabBarLabel: 'Explore',
             tabBarIcon: ({ tintColor }) => <Icon name="ios-search" type="ionicon" size={24}
                 color={tintColor} />
         }
@@ -38,11 +38,19 @@ const AppNavigator = createBottomTabNavigator({
                 color={tintColor} />
         }
     },
-    'MyBooks': {
+    'Reading': {
         screen: AddBookStack,
         navigationOptions: {
-            tabBarLabel: 'My Books',
+            tabBarLabel: 'Reading',
             tabBarIcon: ({ tintColor }) => <Icon name="ios-book" type="ionicon" size={24}
+                color={tintColor} />
+        }
+    },
+    'Shelf': {
+        screen: AddBookStack,
+        navigationOptions: {
+            tabBarLabel: 'Shelf',
+            tabBarIcon: ({ tintColor }) => <Icon name='library-books' type='MaterialIcons' size={24}
                 color={tintColor} />
         }
     },

@@ -27,7 +27,7 @@ export default class AddBook extends React.Component {
                 icon={<Icon name='library-add' type='MaterialIcons' color='#ffffff' containerStyle={{marginRight: 5}} />}
                 buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: '#00A0DC'}}
                 title='Add to Shelf'
-                onPress={()=>console.log()} />
+                onPress={()=>console.log('h')} />
 
         </Card>
         </View>

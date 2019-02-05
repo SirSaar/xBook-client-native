@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text,TextInput, View,FlatList, ActivityIndicator,SafeAreaView } from 'react-native';
-import BookTile from './components/BookTile';
+import BookSearchTile from '../components/BookSearchTile';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DotsLoader } from 'react-native-indicator';
 import {searchBook} from '../services/book.serivce';
@@ -28,7 +28,7 @@ export default class SearchBook extends React.Component {
   }
 
   _renderBook = book => (
-      <BookTile key={book.id}
+      <BookSearchTile key={book.id}
           id={book.id}
           title={book.title}
           author={book.author}
