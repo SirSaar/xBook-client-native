@@ -21,7 +21,9 @@ const { height, width } = Dimensions.get('window')
 class Reading extends Component {
     constructor(props) {
         super(props);
-        getReading(currentUser).then(getBooks).then(books => this.setState({books}));
+        getReading(currentUser)
+        .then(getBooks)
+        .then(books => this.setState({books}));
     }
 
     render() {
@@ -29,18 +31,6 @@ class Reading extends Component {
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView>
                     <View style={{ paddingHorizontal: 20, marginTop: 20, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                        <BookTile width={width}
-                            name="The Cozy Place"
-                            type="PRIVATE ROOM - 2 BEDS"
-                            price={82}
-                            rating={4}
-                        />
-                        <BookTile width={width}
-                            name="The Cozy Place"
-                            type="PRIVATE ROOM - 2 BEDS"
-                            price={82}
-                            rating={4}
-                        />
                         <BookTile width={width}
                             name="The Cozy Place"
                             type="PRIVATE ROOM - 2 BEDS"
