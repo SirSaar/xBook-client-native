@@ -6,24 +6,25 @@ export const dimensions = {
 }
   
 export const colors  = {
-  primary: '#0077B5',
-  secondary: '#00A0DC',
-  tertiary: '#8D6CAB',
-  alert: '#DD5143',
-  warning: '#E68523'
+  primary: '#0077B5', //dark blue
+  secondary: '#00A0DC', //light blue
+  tertiary: '#8D6CAB', //purple
+  alert: '#DD5143', //red
+  warning: '#E68523' //orange
 }
 
 export const text = {
-  title: '#313335',
-  subtitle: '#86888A',
-  normal: '#000000'
+  title: '#313335', //dark grey
+  subtitle: '#86888A', //medium grey
+  normal: '#000000' //black
 }
 
 export const boldWeight = 'bold';
 
-export const background = {
-  box: '#FFFFFF',
-  primary: '#CACCCE'
+export const layout = {
+  box: '#FFFFFF', //white
+  primary: '#CACCCE', //light grey
+  border: '#dddddd'
 }
 
 export const padding = {
@@ -38,3 +39,9 @@ export const fonts = {
   md: 10,
   lg: 12,
 }
+
+export const baseStyles = StyleSheet.create({
+  title: { fontSize: fonts.lg, fontWeight: boldWeight },
+  subtitle: { fontSize: fonts.md },
+  normal: {fontSize: fonts.md}
+})

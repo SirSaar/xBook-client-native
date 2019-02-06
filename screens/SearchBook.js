@@ -4,6 +4,7 @@ import BookSearchTile from '../components/BookSearchTile';
 import { Icon } from 'react-native-elements';
 import { DotsLoader } from 'react-native-indicator';
 import { searchBook } from '../services/bookDetails.service';
+import { baseStyles, text, colors } from '../styles/base';
 
 export default class SearchBook extends React.Component {
   state = {search: '', books: [], isLoading: false, bookSelected: null};
@@ -40,7 +41,7 @@ export default class SearchBook extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1,justifyContent: 'flex-start', marginTop: 20}}>
-          <View style={{ flex: 1,justifyContent: 'flex-start', alignContent: 'center', backgroundColor: 'white', marginHorizontal: 20 }}>
+          <View style={{ flex: 1,justifyContent: 'flex-start', alignContent: 'center', marginHorizontal: 20 }}>
               <View style={{
                   flexDirection: 'row', 
                   alignItems: "center",
@@ -55,14 +56,14 @@ export default class SearchBook extends React.Component {
                   <TextInput
                       underlineColorAndroid="transparent"
                       placeholder="Try Harry Potter"
-                      placeholderTextColor="grey"
+                      placeholderTextColor={text.subtitle}
                       onChangeText={this.searchBook}
                       value={this.state.search}
-                      style={{ flex: 1, fontWeight: '700', backgroundColor: 'white', marginLeft: 10 }}
+                      style={{ flex: 1, fontWeight: 'bold', backgroundColor: 'white', marginLeft: 10 }}
                   />
               </View>
             {this.state.isLoading ? 
-              ( <View style={{ marginTop: 50,flex: 1,alignItems: 'center'}} ><DotsLoader color="#00A0DC" size={30} /></View> ) :
+              ( <View style={{ marginTop: 50,flex: 1,alignItems: 'center'}} ><DotsLoader color={colors.primary} size={30} /></View> ) :
               ( this.state.books && this.state.books.map(this._renderBook) )
             }
           </View>

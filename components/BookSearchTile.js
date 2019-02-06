@@ -7,6 +7,7 @@ import {
     View,
     TouchOpacity
 } from 'react-native';
+import { layout, text } from '../styles/base';
 
 export default class BookTile extends Component {
 
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     container: {
         padding: 1,
         borderBottomWidth: 1,
-        borderColor: '#DCDCDC',
+        borderColor: layout.border, //'#DCDCDC'
     },
     rowContainer: {
         height: 80,
@@ -50,13 +51,13 @@ const styles = StyleSheet.create({
         paddingTop: 1,
         fontSize: 10,
         fontWeight: 'bold',
-        color: '#777'
+        color: text.title
     },
     author: {
         paddingLeft: 10,
         marginTop: 5,
         fontSize: 8,
-        color: '#777'
+        color: text.subtitle
     },
     thumbnail: {
         height: 80,

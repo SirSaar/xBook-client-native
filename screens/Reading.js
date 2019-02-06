@@ -17,7 +17,6 @@ import BookTile from '../components/BookTile';
 import { getReading, changeBookStatus } from "../services/user.service";
 import { currentUser, BOOK_STATUS } from "../models/users";
 
-const { height, width } = Dimensions.get('window')
 class Reading extends Component {
     state = {books: []}
     constructor(props) {
@@ -44,7 +43,7 @@ class Reading extends Component {
                     {
                         this.state.books && 
                         this.state.books.map(book => 
-                            <BookTile key={book.id} width={width}
+                            <BookTile key={book.id}
                             title={book.title}
                             author={book.author}
                             thumbnail={book.thumbnail}
