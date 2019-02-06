@@ -9,17 +9,30 @@ const cleanseBook = (book) => {
 }
 
 export const searchBook = async (bookName) => {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookName}&projection=lite`);
-    const resJson = await res.json();
-    const books = resJson.items;
-    const fewBooks = books.slice(0, 4);
-    const formattedBooks = fewBooks.map(cleanseBook);
-    return formattedBooks;
+    try {
+        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookName}`);
+        const resJson = await res.json();
+        const books = resJson.items;
+        const fewBooks = books.slice(0, 4);
+        const formattedBooks = fewBooks.map(cleanseBook);
+        return formattedBooks;
+    } catch(error) {
+        console.log('httpError: ',error);
+        console.log('response: ',res)
+        return [];
+    }
+
 }
 
 export const getBook = async (id) => {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}&projection=lite`);
-    const book = await res.json();
-    const formattedBook = book.map(cleanseBook);
-    return formattedBook;
+    try {
+        const res = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
+        const book = await res.json();
+        const formattedBook = cleanseBook(book);
+        return formattedBook;
+    } catch(error) {
+        console.log('httpError: ',error);
+        console.log('response: ',res);
+        return null;
+    }
 }

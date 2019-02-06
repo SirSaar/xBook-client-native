@@ -14,22 +14,26 @@ import {
 } from "react-native";
 import BookTile from '../components/BookTile';
 
-import { getReading, addToShelf } from "../services/user.service";
-import { currentUser } from "../models/users";
-import { getBooks } from "../services/bookDetails.service";
+import { getReading, changeBookStatus } from "../services/user.service";
+import { currentUser, BOOK_STATUS } from "../models/users";
 
 const { height, width } = Dimensions.get('window')
 class Reading extends Component {
+    state = {books: []}
     constructor(props) {
         super(props);
         getReading(currentUser)
-        .then(books => this.setState({books}));
+        .then(books => {
+            this.setState({books});
+        });
     }
 
     _onAddToShelf = async (id) => {
-        await addToShelf(id);
-        const books = await getReading(currentUser);
+        const books = [...this.state.books];
+        const index = books.findIndex(book => book.id === id);
+        books.splice(index,1);
         this.setState({books});
+        await changeBookStatus(id, BOOK_STATUS.shelf);
     }
 
     render() {
@@ -40,12 +44,14 @@ class Reading extends Component {
                     {
                         this.state.books && 
                         this.state.books.map(book => 
-                            <BookTile width={width}
+                            <BookTile key={book.id} width={width}
                             title={book.title}
                             author={book.author}
                             thumbnail={book.thumbnail}
                             >
-                            <Button onPress={()=> this._onAddToShelf(bood.id)}>Add to Shelf</Button>
+                            <View style={{padding: 5, marginVertical: 3}}>
+                                <Button onPress={()=> this._onAddToShelf(book.id)} title="Add to Shelf"/>
+                            </View>
                             </BookTile>
                         )
                     }

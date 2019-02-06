@@ -3,12 +3,12 @@ import { getBooks } from "./bookDetails.service";
 
 export const getShelfIds = async (userId) => {
     const books = users[userId].books;
-    return Object.keys(books).filter(id => books.id === BOOK_STATUS.shelf);
+    return books.filter(book => book.status === BOOK_STATUS.shelf).map(book => book.id);
 }
 
-export const getShelfIds = async (userId) => {
+export const getReadingIds = async (userId) => {
     const books = users[userId].books;
-    return Object.keys(books).filter(id => books.id === BOOK_STATUS.reading);
+    return books.filter(book => book.status === BOOK_STATUS.reading).map(book => book.id);
 }
 
 export const getReading = async (userId) => {
@@ -25,14 +25,16 @@ export const getBalance = async (userId) => {
     return {given, received};
 }
 
-export const addToReading = async (bookId) => {
-    users[currentUser].books.bookId = BOOK_STATUS.reading;
+export const changeBookStatus = async (bookId, status) => {
+    const book = users[currentUser].books.find(book => book.id === bookId);
+    book.status = BOOK_STATUS[status];
 }
 
-export const addToShelf = async (bookId) => {
-    users[currentUser].books.bookId = BOOK_STATUS.shelf;
+export const addBook = async (bookId, status) => {
+    users[currentUser].books.push({id: bookId, status});
 }
 
 export const deleteBook = async (bookId) => {
-    delete users[currentUser].books.bookId;
+    const index = users[currentUser].books.findIndex(book => book.id === bookId);
+    users[currentUser].books.splice(index,1);
 }

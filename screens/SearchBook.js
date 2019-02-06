@@ -3,7 +3,7 @@ import { StyleSheet, Text,TextInput, View,FlatList, ActivityIndicator,SafeAreaVi
 import BookSearchTile from '../components/BookSearchTile';
 import { Icon } from 'react-native-elements';
 import { DotsLoader } from 'react-native-indicator';
-import {searchBook} from '../services/bookDetails.serivce';
+import { searchBook } from '../services/bookDetails.service';
 
 export default class SearchBook extends React.Component {
   state = {search: '', books: [], isLoading: false, bookSelected: null};
@@ -15,8 +15,7 @@ export default class SearchBook extends React.Component {
       setTimeout(()=> {
         this.state.search === bookName &&
         searchBook(bookName)
-        .then(books => this.setState({books, isLoading: false}))
-        .catch(console.log);
+        .then(books => this.setState({books, isLoading: false}));
       },2);
     } else {
       this.setState({books: [], isLoading: false});
@@ -37,8 +36,6 @@ export default class SearchBook extends React.Component {
         />
  );
 
-  _keyExtractor = (item, index) => item.id.toString();
-
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -46,6 +43,7 @@ export default class SearchBook extends React.Component {
           <View style={{ flex: 1,justifyContent: 'flex-start', alignContent: 'center', backgroundColor: 'white', marginHorizontal: 20 }}>
               <View style={{
                   flexDirection: 'row', 
+                  alignItems: "center",
                   padding: 10,
                   backgroundColor: 'white',
                   shadowOffset: { width: 0, height: 0 },
@@ -53,14 +51,14 @@ export default class SearchBook extends React.Component {
                   shadowOpacity: 0.2,
                   elevation: 1,
               }}>
-                  <Icon name="ios-search" size={20} style={{ marginRight: 10 }} />
+                  <Icon name="ios-search" size={20} type="ionicon" />
                   <TextInput
                       underlineColorAndroid="transparent"
                       placeholder="Try Harry Potter"
                       placeholderTextColor="grey"
                       onChangeText={this.searchBook}
                       value={this.state.search}
-                      style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
+                      style={{ flex: 1, fontWeight: '700', backgroundColor: 'white', marginLeft: 10 }}
                   />
               </View>
             {this.state.isLoading ? 
