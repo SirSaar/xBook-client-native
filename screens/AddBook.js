@@ -3,6 +3,7 @@ import { StyleSheet, Text,TextInput, View,FlatList, ActivityIndicator,SafeAreaVi
 import { Button, Icon } from 'react-native-elements';
 import BookTile from "../components/BookTile";
 import { colors, layout } from "../styles/base";
+import BookCard from '../components/BookCard';
 
 export default class AddBook extends React.Component {
   render() {
@@ -12,11 +13,11 @@ export default class AddBook extends React.Component {
     return book && (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: layout.primary }}>
-          <BookTile stretch
+          <BookCard stretch
           title={book.title}
           author={book.author}
           thumbnail={book.thumbnail}>
-            <View style={{ marginTop: 12, flex: 1, flexDirection: 'column',alignItems: 'center', justifyContent: 'flex-start'}}>
+            <View style={{ marginTop: 8}}>
               <Button
                     icon={<Icon name='library-add' type='MaterialIcons' color='#ffffff' containerStyle={{marginRight: 5}} />}
                     buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 10, backgroundColor: colors.primary}}
@@ -28,7 +29,7 @@ export default class AddBook extends React.Component {
                   title='Read'
                   onPress={()=>console.log()} />
             </View>
-          </BookTile>
+          </BookCard>
         </View>
       </SafeAreaView>
     );

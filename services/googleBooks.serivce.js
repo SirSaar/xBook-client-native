@@ -12,14 +12,14 @@ export const searchBook = async (bookName) => {
     try {
         const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookName}`);
         const resJson = await res.json();
+        if(!resJson.totalItems) return [];
         const books = resJson.items;
         const fewBooks = books.slice(0, 4);
         const formattedBooks = fewBooks.map(cleanseBook);
         return formattedBooks;
     } catch(error) {
         console.log('httpError: ',error);
-        console.log('response: ',res)
-        return [];
+        console.log('response: ',res);
     }
 
 }
@@ -33,6 +33,5 @@ export const getBook = async (id) => {
     } catch(error) {
         console.log('httpError: ',error);
         console.log('response: ',res);
-        return null;
     }
 }

@@ -16,7 +16,7 @@ import BookTile from '../components/BookTile';
 
 import { getReading, changeBookStatus } from "../services/user.service";
 import { currentUser, BOOK_STATUS } from "../models/users";
-import { colors } from "../styles/base";
+import { colors, layout } from "../styles/base";
 
 class Reading extends Component {
     state = {books: []}
@@ -39,7 +39,7 @@ class Reading extends Component {
     render() {
         console.log(this.state.books.length)
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: layout.primary }}>
                 <ScrollView>
                     <View style={{ paddingHorizontal: 20, marginTop: 50, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                     {

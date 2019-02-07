@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         padding: 1,
         borderBottomWidth: 1,
         borderColor: layout.border, 
+        backgroundColor: layout.box
     },
     rowContainer: {
         height: 80,

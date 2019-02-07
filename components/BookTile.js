@@ -18,13 +18,13 @@ class BookTile extends Component {
 
     render() {
         return (
-            <View style={[styles.container,this.props.stretch ? styles.stretch : styles.box]}>
+            <View style={[styles.container, styles.box]}>
                 <View style={{ flex: 1 }}>
                     <TouchableOpacity style={{ flex: 1 }} onPress={this._onShowDetails}>
                     {
                         this.state.showDetails || !this.props.thumbnail ?
                         <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-                            <View style={this.props.stretch && styles.textInStretch}>
+                            <View>
                                 <Text style={baseStyles.title}>{this.props.title}</Text>
                                 <Text style={baseStyles.subtitle}>{this.props.author}</Text>
                             </View>
@@ -45,19 +45,12 @@ class BookTile extends Component {
 
 const styles = StyleSheet.create({
     container: { 
-        paddingVertical: 12, 
-    },
-    stretch: {
-        borderWidth: 0.5, 
-        borderColor: layout.border, 
-        width: (dimensions.fullWidth / 2 - 30)*2, 
-        height: (dimensions.fullWidth /2 + 20)*2-100,
-    },
-    textInStretch: {
-        width: dimensions.fullWidth / 2,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        paddingVertical: 12,
+        backgroundColor: layout.box,
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: 'black',
+        shadowOpacity: 0.2,
+        elevation: 1,
     },
     box: {
         borderWidth: 0.5, 

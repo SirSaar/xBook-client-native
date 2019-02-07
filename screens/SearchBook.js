@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TextInput, View,FlatList, ActivityIndicator,SafeAreaView } from 'react-native';
+import { StyleSheet,TouchableOpacity, Text,TextInput, View,FlatList, ActivityIndicator,SafeAreaView } from 'react-native';
 import BookSearchTile from '../components/BookSearchTile';
 import { Icon } from 'react-native-elements';
 import { DotsLoader } from 'react-native-indicator';
@@ -7,7 +7,7 @@ import { searchBook } from '../services/bookDetails.service';
 import { text, colors, layout } from '../styles/base';
 
 export default class SearchBook extends React.Component {
-  state = {search: '', books: [], isLoading: false, bookSelected: null};
+  state = {search: '', books: [], isLoading: false};
   
   searchBook = (bookName) => {
     this.setState({search: bookName});
@@ -39,7 +39,7 @@ export default class SearchBook extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: layout.primary }}>
         <View style={{ flex: 1,justifyContent: 'flex-start', marginTop: 20}}>
           <View style={{ flex: 1,justifyContent: 'flex-start', alignContent: 'center', marginHorizontal: 20 }}>
               <View style={{
@@ -61,11 +61,16 @@ export default class SearchBook extends React.Component {
                       value={this.state.search}
                       style={{ flex: 1, fontWeight: 'bold', backgroundColor: 'white', marginLeft: 10 }}
                   />
+                  { !!this.state.search &&  
+                  <TouchableOpacity onPress={()=>this.setState({search: '', books: [], isLoading: false})}>
+                    <Icon name="ios-close" size={30} type="ionicon" style={{alignSelf: 'flex-end'}} />
+                  </TouchableOpacity> 
+                }
               </View>
             {this.state.isLoading ? 
-              ( <View style={styles.icon} ><DotsLoader color={colors.primary} size={30} /></View> ) :
+              ( <View style={styles.icon} ><DotsLoader color={colors.primary} size={20} /></View> ) :
               ( !!this.state.books.length ? this.state.books.map(this._renderBook) :
-              <View style={styles.icon} ><Icon name="find-in-page" color={layout.primary} size={95} type="material" /></View>
+              <View style={styles.icon} ><Icon name="find-in-page" color={colors.primary} size={95} type="material" /></View>
               )
             }
           </View>
@@ -76,5 +81,10 @@ export default class SearchBook extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  icon: { marginBottom: 35,flex: 1,alignItems: 'center', justifyContent: 'center'}
+  icon: { 
+    marginBottom: 70,
+    flex: 1,
+    alignItems: 'center', 
+    justifyContent: 'center'
+  }
 });

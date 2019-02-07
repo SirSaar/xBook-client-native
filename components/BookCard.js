@@ -9,6 +9,8 @@ import {
 
 import { dimensions,layout,baseStyles } from "../styles/base";
 
+const cardSize = 280;
+
 class BookCard extends Component {
     state = {showDetails: false}
 
@@ -18,25 +20,23 @@ class BookCard extends Component {
 
     render() {
         return (
-            <View style={[styles.container,this.props.stretch ? styles.stretch : styles.box]}>
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={this._onShowDetails}>
+            <View style={styles.container}>
+                    <TouchableOpacity style={{}} onPress={this._onShowDetails}>
                     {
                         this.state.showDetails || !this.props.thumbnail ?
-                        <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-                            <View style={this.props.stretch && styles.textInStretch}>
+                        <View style={{width: cardSize, height: cardSize}}>
+                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={baseStyles.title}>{this.props.title}</Text>
                                 <Text style={baseStyles.subtitle}>{this.props.author}</Text>
                             </View>
                         </View>
                         :
                         <Image
-                            style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }}
+                            style={{ width: cardSize, height: cardSize,resizeMode: 'contain' }}
                             source={{uri: this.props.thumbnail}} />
                     }
 
                     </TouchableOpacity>
-                </View>
                 { this.props.children }
             </View>
         );
@@ -45,26 +45,13 @@ class BookCard extends Component {
 
 const styles = StyleSheet.create({
     container: { 
-        paddingVertical: 12, 
+        backgroundColor: layout.box,
+        paddingHorizontal: 12,
+        paddingVertical: 20,
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: 'black',
+        shadowOpacity: 0.2,
+        elevation: 1,
     },
-    stretch: {
-        borderWidth: 0.5, 
-        borderColor: layout.border, 
-        width: (dimensions.fullWidth / 2 - 30)*2, 
-        height: (dimensions.fullWidth /2 + 20)*2-100,
-    },
-    textInStretch: {
-        width: dimensions.fullWidth / 2,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    box: {
-        borderWidth: 0.5, 
-        borderColor: layout.border, 
-        width: dimensions.fullWidth / 2 - 30, 
-        height: dimensions.fullWidth /2 + 20,
-        marginBottom: 10
-    }
 })
 export default BookCard;

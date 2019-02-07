@@ -23,7 +23,7 @@ export const boldWeight = 'bold';
 
 export const layout = {
   box: '#FFFFFF', //white
-  primary: '#CACCCE', //light grey
+  primary: '#f6f6f6', //light grey
   border: '#dddddd'
 }
 
