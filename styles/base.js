@@ -38,10 +38,12 @@ export const fonts = {
   sm: 8,
   md: 10,
   lg: 12,
+  xl: 18,
 }
 
 export const baseStyles = StyleSheet.create({
-  title: { fontSize: fonts.lg, fontWeight: boldWeight },
-  subtitle: { fontSize: fonts.md },
-  normal: {fontSize: fonts.md}
+  header: { fontSize: fonts.xl, fontWeight: 'normal', color: text.title  },
+  title: { fontSize: fonts.lg, fontWeight: boldWeight, textAlign: 'center', color: text.title },
+  subtitle: { fontSize: fonts.md, textAlign: 'center', color: text.subtitle },
+  normal: {fontSize: fonts.md, color: text.normal}
 })

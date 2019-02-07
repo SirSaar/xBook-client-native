@@ -9,7 +9,7 @@ import {
 
 import { dimensions,layout,baseStyles } from "../styles/base";
 
-class BookTile extends Component {
+class BookCard extends Component {
     state = {showDetails: false}
 
     _onShowDetails = () => {
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
         marginBottom: 10
     }
 })
-export default BookTile;
+export default BookCard;

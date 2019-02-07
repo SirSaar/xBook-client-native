@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     container: {
         padding: 1,
         borderBottomWidth: 1,
-        borderColor: layout.border, //'#DCDCDC'
+        borderColor: layout.border, 
     },
     rowContainer: {
         height: 80,

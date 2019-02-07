@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Dimensions, Platform } from 'react-native';
 import { createAppContainer, StackNavigator, createStackNavigator, createBottomTabNavigator, withNavigation } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import SearchBook from './screens/SearchBook';
 import AddBook from './screens/AddBook';
 import Reading from './screens/Reading';
+import Explore from './screens/Explore';
+
+import { colors, layout, text, fonts, baseStyles } from "./styles/base";
 
 const AddBookStack = createStackNavigator({
     SearchBook: {
@@ -20,11 +22,20 @@ const AddBookStack = createStackNavigator({
             title: 'What to do with the book?'
         }
     },
-});
+}, {
+        defaultNavigationOptions: {
+            headerStyle: {
+                elevation: 1,
+            },
+            headerTitleStyle: {
+                ...baseStyles.header
+            }
+        }
+    });
 
 const AppNavigator = createBottomTabNavigator({
     'Explore': {
-        screen: AddBookStack,
+        screen: Explore,
         navigationOptions: {
             tabBarLabel: 'Explore',
             tabBarIcon: ({ tintColor }) => <Icon name="ios-search" type="ionicon" size={24}
@@ -67,8 +78,8 @@ const AppNavigator = createBottomTabNavigator({
 },
     {
         tabBarOptions: {
-            activeTintColor: '#0077B5',
-            inactiveTintColor: 'grey',
+            activeTintColor: colors.primary,
+            inactiveTintColor: text.subtitle,
             style: {
                 backgroundColor: 'white',
                 borderTopWidth: 0,

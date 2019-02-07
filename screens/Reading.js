@@ -16,6 +16,7 @@ import BookTile from '../components/BookTile';
 
 import { getReading, changeBookStatus } from "../services/user.service";
 import { currentUser, BOOK_STATUS } from "../models/users";
+import { colors } from "../styles/base";
 
 class Reading extends Component {
     state = {books: []}
@@ -36,21 +37,22 @@ class Reading extends Component {
     }
 
     render() {
+        console.log(this.state.books.length)
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView>
-                    <View style={{ paddingHorizontal: 20, marginTop: 20, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                    <View style={{ paddingHorizontal: 20, marginTop: 50, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                     {
-                        this.state.books && 
+                        !!this.state.books.length && 
                         this.state.books.map(book => 
                             <BookTile key={book.id}
                             title={book.title}
                             author={book.author}
                             thumbnail={book.thumbnail}
                             >
-                            <View style={{padding: 5, marginVertical: 3}}>
-                                <Button onPress={()=> this._onAddToShelf(book.id)} title="Add to Shelf"/>
-                            </View>
+                                <View style={{padding: 8, paddingBottom: 0}}>
+                                    <Button onPress={()=> this._onAddToShelf(book.id)} color={colors.primary} title="Add to Shelf"/>
+                                </View>
                             </BookTile>
                         )
                     }

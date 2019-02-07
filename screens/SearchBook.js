@@ -4,7 +4,7 @@ import BookSearchTile from '../components/BookSearchTile';
 import { Icon } from 'react-native-elements';
 import { DotsLoader } from 'react-native-indicator';
 import { searchBook } from '../services/bookDetails.service';
-import { baseStyles, text, colors } from '../styles/base';
+import { text, colors, layout } from '../styles/base';
 
 export default class SearchBook extends React.Component {
   state = {search: '', books: [], isLoading: false, bookSelected: null};
@@ -17,7 +17,7 @@ export default class SearchBook extends React.Component {
         this.state.search === bookName &&
         searchBook(bookName)
         .then(books => this.setState({books, isLoading: false}));
-      },2);
+      },3);
     } else {
       this.setState({books: [], isLoading: false});
     }
@@ -63,8 +63,10 @@ export default class SearchBook extends React.Component {
                   />
               </View>
             {this.state.isLoading ? 
-              ( <View style={{ marginTop: 50,flex: 1,alignItems: 'center'}} ><DotsLoader color={colors.primary} size={30} /></View> ) :
-              ( this.state.books && this.state.books.map(this._renderBook) )
+              ( <View style={styles.icon} ><DotsLoader color={colors.primary} size={30} /></View> ) :
+              ( !!this.state.books.length ? this.state.books.map(this._renderBook) :
+              <View style={styles.icon} ><Icon name="find-in-page" color={layout.primary} size={95} type="material" /></View>
+              )
             }
           </View>
         </View>
@@ -72,3 +74,7 @@ export default class SearchBook extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  icon: { marginBottom: 35,flex: 1,alignItems: 'center', justifyContent: 'center'}
+});
