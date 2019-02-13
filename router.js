@@ -6,6 +6,8 @@ import SearchBook from './screens/SearchBook';
 import AddBook from './screens/AddBook';
 import Reading from './screens/Reading';
 import Explore from './screens/Explore';
+import AuthLoading from './screens/AuthLoading';
+import SignIn from './screens/SignIn';
 
 import { colors, layout, text, fonts, baseStyles } from "./styles/base";
 
@@ -61,7 +63,7 @@ const AppNavigator = createBottomTabNavigator({
     'Shelf': {
         screen: AddBookStack,
         navigationOptions: {
-            tabBarLabel: 'Bookshelf',
+            tabBarLabel: 'GiveAway',
             tabBarIcon: ({ tintColor }) => <Icon name='library-books' type='MaterialIcons' size={24}
                 color={tintColor} />
         }
@@ -91,4 +93,17 @@ const AppNavigator = createBottomTabNavigator({
         }
     });
 
-export const AppContainer = createAppContainer(AppNavigator);
+const AuthStack = createStackNavigator({ SignIn: SignIn });
+
+const AuthNavigator = createSwitchNavigator(
+    {
+        AuthLoading: AuthLoading,
+        App: AuthNavigator,
+        Auth: AuthStack,
+    },
+    {
+        initialRouteName: 'AuthLoading',
+    }
+);
+
+export const AppContainer = createAppContainer(AuthNavigator);
