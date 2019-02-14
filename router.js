@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createAppContainer, StackNavigator, createStackNavigator, createBottomTabNavigator, withNavigation } from 'react-navigation';
+import { createAppContainer, createStackNavigator, createBottomTabNavigator, createSwitchNavigator, withNavigation } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import SearchBook from './screens/SearchBook';
@@ -97,12 +97,9 @@ const AuthStack = createStackNavigator({ SignIn: SignIn });
 
 const AuthNavigator = createSwitchNavigator(
     {
-        AuthLoading: AuthLoading,
-        App: AuthNavigator,
+        // AuthLoading: AuthLoading,
         Auth: AuthStack,
-    },
-    {
-        initialRouteName: 'AuthLoading',
+        App: AppNavigator,
     }
 );
 

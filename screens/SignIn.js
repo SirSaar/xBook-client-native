@@ -12,7 +12,7 @@ export default class SignIn extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Button title="Open FB Auth" onPress={this._handlePressAsync} />
+          <Button title="Sign In with Facebook" onPress={this._handlePressAsync} />
       </View>
     );
   }
@@ -25,42 +25,19 @@ export default class SignIn extends Component {
       redirectUrl
     });
 
-    // NOTICE: Please do not actually request the token on the client (see:
-    // response_type=token in the authUrl), it is not secure. Request a code
-    // instead, and use this flow:
-    // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/#confirm
-    // The code here is simplified for the sake of demonstration. If you are
-    // just prototyping then you don't need to concern yourself with this and
-    // can copy this example, but be aware that this is not safe in production.
-
     let result = await AuthSession.startAsync({
       authUrl:
-        `https://www.facebook.com/v2.8/dialog/oauth?response_type=token` +
-        `&client_id=${FB_APP_ID}` +
-        `&redirect_uri=${encodeURIComponent(redirectUrl)}`,
+        `https://glacial-fortress-14735.herokuapp.com/api/user/auth/facebook`
     });
 
     if (result.type !== 'success') {
-      alert('Uh oh, something went wrong');
+      console.log('Uh oh, something went wrong', result)
       return;
     }
+    console.log( result)
 
-    let accessToken = result.params.access_token;
-    // let userInfoResponse = await fetch(
-    //   `https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,picture.type(large)`
-    // );
-    // const userInfo = await userInfoResponse.json();
-
-    //send post to server and get jwt token
-    const response = await fetch('http://localhost:3000/api/signup',{  
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify({data: accessToken}), // data can be `string` or {object}!
-    headers:{
-      'Content-Type': 'application/json'
-    }});
-    const userToken = (await response.json()).data;
-    await AsyncStorage.setItem('userToken', userToken);
-
-    this.setState({ userInfo });
+    const res = await fetch('https://glacial-fortress-14735.herokuapp.com/api/user/profile');
+    const body = await res.json();
+    console.log(JSON.stringify(body));
   };
 }

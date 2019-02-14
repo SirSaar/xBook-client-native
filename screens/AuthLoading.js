@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-class AuthLoading extends React.Component {
+export default class AuthLoading extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
@@ -15,11 +15,11 @@ class AuthLoading extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
-
+    const res = await fetch('https://glacial-fortress-14735.herokuapp.com/api/user/profile');
+    const body = await res.json();
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    this.props.navigation.navigate(body.firstName ? 'App' : 'Auth');
   };
 
   // Render any loading content that you like here
@@ -32,3 +32,11 @@ class AuthLoading extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: { 
+    flex: 1,
+    alignItems: 'center', 
+    justifyContent: 'center'
+  }
+});
