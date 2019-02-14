@@ -1,55 +1,40 @@
 import React, { Component } from 'react';
-import { Image, Button, StyleSheet, Text, View, WebView } from 'react-native';
+import { Image, Button, StyleSheet, Text, View } from 'react-native';
+import { AuthSession } from 'expo';
 
-
-const LOGIN_URL = "https://glacial-fortress-14735.herokuapp.com/api/user/auth/facebook";
-const SUCCESS_URL = "https://glacial-fortress-14735.herokuapp.com/api/user/profile";
-const FAILED_URL = "https://glacial-fortress-14735.herokuapp.com/api/user/auth/failed";
+const FB_APP_ID = '672636582940821';
 
 export default class SignIn extends Component {
-  state = {isLoggedIn: false, fbSignIn: false}
+
   render() {
-    if(this.state.isLoggedIn) return this.props.navigation.navigate('App');
-    if(this.state.fbSignIn) {
-      return (
-      <View style={[styles.container]}>
-        <WebView
-          ref={'webview'}
-          automaticallyAdjustContentInsets={false}
-          style={styles.webView}
-          source={{uri: LOGIN_URL}}
-          javaScriptEnabled={true}
-          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-          startInLoadingState={true}
-          scalesPageToFit={true}
-        />
-      </View>
-      )
-    } else
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Button title="Sign In with Facebook" onPress={this._handlePress} />
+          <Button title="Sign In with Facebook" onPress={this._handlePressAsync} />
       </View>
     );
   }
 
-  onNavigationStateChange (navState) {
-    if (navState.url == SUCCESS_URL) {
-      this.setState({
-        isLoggedIn: true,
-      });
+  _handlePressAsync = async () => {
+    let redirectUrl = AuthSession.getRedirectUrl();
+
+    // You need to add this url to your authorized redirect urls on your Facebook app
+    console.log({
+      redirectUrl
+    });
+
+    let result = await AuthSession.startAsync({
+      authUrl:
+        `https://glacial-fortress-14735.herokuapp.com/api/auth/facebook`
+    });
+
+    if (result.type !== 'success') {
+      console.log('Uh oh, something went wrong', result)
+      return;
     }
-  }
+    console.log(result.params)
 
-  _handlePress = () => {
-    this.setState({fbSignIn: true})
-  }
+    const res = await fetch('https://glacial-fortress-14735.herokuapp.com/api/auth/token');
+    const body = await res.json();
+    console.log(JSON.stringify(body));
+  };
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
