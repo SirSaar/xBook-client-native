@@ -1,43 +1,52 @@
 import React, { Component } from 'react';
-import { Image, Button, StyleSheet, Text, View } from 'react-native';
+import { Image, Button, StyleSheet, Text, View, WebView } from 'react-native';
 import { AuthSession } from 'expo';
 
-const FB_APP_ID = '672636582940821';
+
+const LOGIN_URL = "https://glacial-fortress-14735.herokuapp.com/api/user/auth/facebook";
+const SUCCESS_URL = "https://glacial-fortress-14735.herokuapp.com/api/user/profile";
 
 export default class SignIn extends Component {
-  state = {
-    userInfo: null,
-  };
-
+  state = {isLoggedIn: false}
   render() {
+    if(!this.state.isLoggedIn) {
+      <View style={[styles.container]}>
+        <WebView
+          ref={'webview'}
+          automaticallyAdjustContentInsets={false}
+          style={styles.webView}
+          source={{uri: LOGIN_URL}}
+          javaScriptEnabled={true}
+          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          startInLoadingState={true}
+          scalesPageToFit={true}
+        />
+      </View>
+    } else
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Button title="Sign In with Facebook" onPress={this._handlePressAsync} />
+          <Button title="Sign In with Facebook" onPress={this._handlePress} />
       </View>
     );
   }
 
-  _handlePressAsync = async () => {
-    let redirectUrl = AuthSession.getRedirectUrl();
-
-    // You need to add this url to your authorized redirect urls on your Facebook app
-    console.log({
-      redirectUrl
-    });
-
-    let result = await AuthSession.startAsync({
-      authUrl:
-        `https://glacial-fortress-14735.herokuapp.com/api/user/auth/facebook`
-    });
-
-    if (result.type !== 'success') {
-      console.log('Uh oh, something went wrong', result)
-      return;
+  onNavigationStateChange (navState) {
+    if (navState.url == SUCCESS_URL) {
+      this.setState({
+        loggedIn: true,
+      });
     }
-    console.log( result)
+  }
 
-    const res = await fetch('https://glacial-fortress-14735.herokuapp.com/api/user/profile');
-    const body = await res.json();
-    console.log(JSON.stringify(body));
-  };
+  _handlePress = async () => {
+
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
