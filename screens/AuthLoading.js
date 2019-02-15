@@ -13,13 +13,9 @@ export default class AuthLoading extends React.Component {
     this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const res = await fetch('https://glacial-fortress-14735.herokuapp.com/api/user/profile');
-    const body = await res.json();
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(body.firstName ? 'App' : 'Auth');
+    const authToken = await AsyncStorage.getItem('authToken');
+    this.props.navigation.navigate(authToken ? 'App' : 'Auth');
   };
 
   // Render any loading content that you like here
@@ -27,7 +23,6 @@ export default class AuthLoading extends React.Component {
     return (
       <View style={styles.container}>
         <ActivityIndicator />
-        <StatusBar barStyle="default" />
       </View>
     );
   }

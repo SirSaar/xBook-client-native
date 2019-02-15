@@ -97,7 +97,7 @@ const AuthStack = createStackNavigator({ SignIn: SignIn });
 
 const AuthNavigator = createSwitchNavigator(
     {
-        // AuthLoading: AuthLoading,
+        AuthLoading: AuthLoading,
         Auth: AuthStack,
         App: AppNavigator,
     }
