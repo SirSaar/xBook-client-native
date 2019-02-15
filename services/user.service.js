@@ -1,22 +1,22 @@
-import { users, currentUser, BOOK_STATUS } from "../models/users";
+import { users, currentUser } from "../models/users";
 import { getBooks } from "./bookDetails.service";
 
-export const getShelfIds = async (userId) => {
+export const getAvailableIds = async (userId) => {
     const books = users[userId].books;
-    return books.filter(book => book.status === BOOK_STATUS.shelf).map(book => book.id);
+    return books.filter(book => book.available).map(book => book.id);
 }
 
-export const getReadingIds = async (userId) => {
+export const getUnavailableIds = async (userId) => {
     const books = users[userId].books;
-    return books.filter(book => book.status === BOOK_STATUS.reading).map(book => book.id);
+    return books.filter(book => !book.available).map(book => book.id);
 }
 
-export const getReading = async (userId) => {
-    return getReadingIds(userId).then(getBooks);
+export const getUnavailable = async (userId) => {
+    return getUnavailableIds(userId).then(getBooks);
 }
 
-export const getShelf = async (userId) => {
-    return getShelfIds(userId).then(getBooks);
+export const getAvailable = async (userId) => {
+    return getAvailableIds(userId).then(getBooks);
 }
 
 export const getBalance = async (userId) => {
