@@ -5,7 +5,7 @@ export const dimensions = {
   fullWidth: Dimensions.get('window').width
 }
   
-export const colors  = {
+export const brandColor  = {
   primary: '#0077B5', //dark blue
   secondary: '#00A0DC', //light blue
   tertiary: '#8D6CAB', //purple
@@ -13,7 +13,7 @@ export const colors  = {
   warning: '#E68523' //orange
 }
 
-export const text = {
+export const textColor = {
   title: '#313335', //dark grey
   subtitle: '#86888A', //medium grey
   normal: '#000000' //black
@@ -21,9 +21,9 @@ export const text = {
 
 export const boldWeight = 'bold';
 
-export const layout = {
+export const layoutColor = {
   box: '#FFFFFF', //white
-  primary: '#f6f6f6', //light grey
+  background: '#f6f6f6', //light grey
   border: '#dddddd'
 }
 
@@ -34,16 +34,16 @@ export const padding = {
   xl: 40
 }
 
-export const fonts = {
+export const textSize = {
   sm: 8,
   md: 10,
   lg: 12,
   xl: 18,
 }
 
-export const baseStyles = StyleSheet.create({
-  header: { fontSize: fonts.xl, fontWeight: 'normal', color: text.title  },
-  title: { fontSize: fonts.lg, fontWeight: boldWeight, textAlign: 'center', color: text.title },
-  subtitle: { fontSize: fonts.md, textAlign: 'center', color: text.subtitle },
-  normal: {fontSize: fonts.md, color: text.normal}
+export const textStyles = StyleSheet.create({
+  header: { fontSize: textSize.xl, fontWeight: 'normal', color: textColor.title  },
+  title: { fontSize: textSize.lg, fontWeight: boldWeight, textAlign: 'center', color: textColor.title },
+  subtitle: { fontSize: textSize.md, textAlign: 'center', color: textColor.subtitle },
+  normal: {fontSize: textSize.md, color: textColor.normal}
 })

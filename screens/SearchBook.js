@@ -4,7 +4,7 @@ import BookSearchTile from '../components/BookSearchTile';
 import { Icon } from 'react-native-elements';
 import { DotsLoader } from 'react-native-indicator';
 import { searchBook } from '../services/bookDetails.service';
-import { text, colors, layout } from '../styles/base';
+import { textColor, brandColor, layoutColor } from '../styles/base';
 
 export default class SearchBook extends React.Component {
   state = {search: '', books: [], isLoading: false};
@@ -39,7 +39,7 @@ export default class SearchBook extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: layout.primary }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: layoutColor.background }}>
         <View style={{ flex: 1,justifyContent: 'flex-start', marginTop: 20}}>
           <View style={{ flex: 1,justifyContent: 'flex-start', alignContent: 'center', marginHorizontal: 20 }}>
               <View style={{
@@ -56,7 +56,7 @@ export default class SearchBook extends React.Component {
                   <TextInput
                       underlineColorAndroid="transparent"
                       placeholder="Try Harry Potter"
-                      placeholderTextColor={text.subtitle}
+                      placeholderTextColor={textColor.subtitle}
                       onChangeText={this.searchBook}
                       value={this.state.search}
                       style={{ flex: 1, fontWeight: 'bold', backgroundColor: 'white', marginLeft: 10 }}
@@ -68,9 +68,9 @@ export default class SearchBook extends React.Component {
                 }
               </View>
             {this.state.isLoading ? 
-              ( <View style={styles.icon} ><DotsLoader color={colors.primary} size={20} /></View> ) :
+              ( <View style={styles.icon} ><DotsLoader color={brandColor.primary} size={20} /></View> ) :
               ( !!this.state.books.length ? this.state.books.map(this._renderBook) :
-              <View style={styles.icon} ><Icon name="find-in-page" color={colors.primary} size={95} type="material" /></View>
+              <View style={styles.icon} ><Icon name="find-in-page" color={brandColor.primary} size={95} type="material" /></View>
               )
             }
           </View>

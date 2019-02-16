@@ -7,7 +7,7 @@ import {
     TouchableOpacity
 } from "react-native";
 
-import { dimensions,layout,baseStyles } from "../styles/base";
+import { dimensions,layoutColor,textStyles } from "../styles/base";
 
 class BookTile extends Component {
     state = {showDetails: false}
@@ -25,8 +25,8 @@ class BookTile extends Component {
                         this.state.showDetails || !this.props.thumbnail ?
                         <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
                             <View>
-                                <Text style={baseStyles.title}>{this.props.title}</Text>
-                                <Text style={baseStyles.subtitle}>{this.props.author}</Text>
+                                <Text style={textStyles.title}>{this.props.title}</Text>
+                                <Text style={textStyles.subtitle}>{this.props.author}</Text>
                             </View>
                         </View>
                         :
@@ -46,7 +46,7 @@ class BookTile extends Component {
 const styles = StyleSheet.create({
     container: { 
         paddingVertical: 12,
-        backgroundColor: layout.box,
+        backgroundColor: layoutColor.box,
         shadowOffset: { width: 0, height: 0 },
         shadowColor: 'black',
         shadowOpacity: 0.2,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     },
     box: {
         borderWidth: 0.5, 
-        borderColor: layout.border, 
+        borderColor: layoutColor.border, 
         width: dimensions.fullWidth / 2 - 30, 
         height: dimensions.fullWidth /2 + 20,
         marginBottom: 10

@@ -7,7 +7,7 @@ import {
     TouchableOpacity
 } from "react-native";
 
-import { dimensions,layout,baseStyles } from "../styles/base";
+import { dimensions,layoutColor,textStyles } from "../styles/base";
 
 const cardSize = 280;
 
@@ -26,8 +26,8 @@ class BookCard extends Component {
                         this.state.showDetails || !this.props.thumbnail ?
                         <View style={{width: cardSize, height: cardSize}}>
                             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={baseStyles.title}>{this.props.title}</Text>
-                                <Text style={baseStyles.subtitle}>{this.props.author}</Text>
+                                <Text style={textStyles.title}>{this.props.title}</Text>
+                                <Text style={textStyles.subtitle}>{this.props.author}</Text>
                             </View>
                         </View>
                         :
@@ -45,7 +45,7 @@ class BookCard extends Component {
 
 const styles = StyleSheet.create({
     container: { 
-        backgroundColor: layout.box,
+        backgroundColor: layoutColor.box,
         paddingHorizontal: 12,
         paddingVertical: 20,
         shadowOffset: { width: 0, height: 0 },

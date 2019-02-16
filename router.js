@@ -9,7 +9,7 @@ import Explore from './screens/Explore';
 import AuthLoading from './screens/AuthLoading';
 import SignIn from './screens/SignIn';
 
-import { colors, layout, text, fonts, baseStyles } from "./styles/base";
+import { brandColor, layoutColor, textColor, textSize, textStyles } from "./styles/base";
 
 const AddBookStack = createStackNavigator({
     SearchBook: {
@@ -30,7 +30,7 @@ const AddBookStack = createStackNavigator({
                 elevation: 1,
             },
             headerTitleStyle: {
-                ...baseStyles.header
+                ...textStyles.header
             }
         }
     });
@@ -80,8 +80,8 @@ const AppNavigator = createBottomTabNavigator({
 },
     {
         tabBarOptions: {
-            activeTintColor: colors.primary,
-            inactiveTintColor: text.subtitle,
+            activeTintColor: brandColor.primary,
+            inactiveTintColor: textColor.subtitle,
             style: {
                 backgroundColor: 'white',
                 borderTopWidth: 0,
