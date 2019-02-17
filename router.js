@@ -60,7 +60,7 @@ const AppNavigator = createBottomTabNavigator({
                 color={tintColor} />
         }
     },
-    'Shelf': {
+    'Giveaway': {
         screen: AddBookStack,
         navigationOptions: {
             tabBarLabel: 'GiveAway',

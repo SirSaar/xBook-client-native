@@ -21,7 +21,7 @@ export default class AddBook extends React.Component {
               <Button
                     icon={<Icon name='library-add' type='MaterialIcons' color='#ffffff' containerStyle={{marginRight: 5}} />}
                     buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 10, backgroundColor: brandColor.background}}
-                    title='Add to Shelf'
+                    title='Add to Giveaway'
                     onPress={()=>console.log('h')} />
               <Button
                   icon={<Icon name='ios-book' type='ionicon' color='#ffffff' containerStyle={{marginRight: 7}} />}

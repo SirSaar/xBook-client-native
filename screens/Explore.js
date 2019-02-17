@@ -17,7 +17,7 @@ import BookCard from "../components/BookCard";
 class Explore extends Component {
     render() {
         return (
-            <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <BookCard title={'title'}
                         author={'author'}
                         thumbnail={'http://books.google.com/books/content?id=YvQ_AhkJpBUC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api'}>
