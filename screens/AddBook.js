@@ -12,8 +12,8 @@ export default class AddBook extends React.Component {
 
     return book && (
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: layoutColor.background }}>
-          <BookCard stretch
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'stretch', backgroundColor: layoutColor.background }}>
+          <BookCard
           title={book.title}
           author={book.author}
           thumbnail={book.thumbnail}>
