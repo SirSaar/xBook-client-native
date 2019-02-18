@@ -1,5 +1,4 @@
-import { users, currentUser } from "../models/users";
-import { getBooks } from "./bookDetails.service";
+import { getBook } from "./bookDetails.service";
 import { headers, handleErrors, json, serverUrl } from './config';
 
 const userApi = '/api/user';
