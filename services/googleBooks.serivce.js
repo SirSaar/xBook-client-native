@@ -1,3 +1,6 @@
+/*
+    take only the needed info from api
+*/
 const cleanseBook = (book) => {
     const newBook={};
     newBook.id=book.id;
@@ -24,7 +27,7 @@ export const searchBook = async (bookName) => {
 
 }
 
-export const getBook = async (id) => {
+export const getBookById = async (id) => {
     try {
         const res = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
         const book = await res.json();
