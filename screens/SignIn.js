@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Image, Button, StyleSheet, Text, View, WebView, ActivityIndicator,AsyncStorage } from 'react-native';
 const parseUrl = require('url-parse');
+import { serverUrl } from '../config';
 
-const LOGIN_URL = "https://glacial-fortress-14735.herokuapp.com/api/auth/facebook";
+const LOGIN_URL = serverUrl + "/api/auth/facebook";
 const SUCCESS_PATH = "/api/auth/success";
 const FAILED_PATH = "/api/auth/failed";
 

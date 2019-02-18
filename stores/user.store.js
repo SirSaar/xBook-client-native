@@ -1,7 +1,7 @@
 import {observable, autorun} from 'mobx';
 import { getMyUser, getUsers, addBook, updateBook, deleteBook, getUser } from "../services/user.service";
 
-export class UserStore {
+class UserStore {
     @observable users = [];     // users.books will be with only available books
     @observable isLoadingUsers;
     @observable currentUser;    // users.books will be with all books
@@ -52,4 +52,10 @@ export class UserStore {
         .catch(action(err => { this.pullCurrentUser(); throw err }));
     }
 
+    @action forgetCurrentUser() {
+        this.currentUser = undefined;
+    }
+
 }
+
+export default new UserStore();

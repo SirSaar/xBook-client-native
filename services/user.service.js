@@ -1,5 +1,6 @@
 import { getBook } from "./bookDetails.service";
-import { headers, handleErrors, json, serverUrl } from './config';
+import { headers, handleErrors, json } from './config';
+import { serverUrl } from '../config';
 
 const userApi = '/api/user';
 const userUrl = serverUrl + userApi;

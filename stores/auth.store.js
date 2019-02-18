@@ -1,5 +1,7 @@
 import {observable, autorun} from 'mobx';
 import { AsyncStorage } from 'react-native';
+import { authCookie } from "../config";
+import userStore from './user.store';
 
 export class AuthStore {
     @observable token;
@@ -7,22 +9,25 @@ export class AuthStore {
 
     @action setToken(token) {
         this.isLoading = true;
-        AsyncStorage.setItem('authToken', authToken)
+        AsyncStorage.setItem(authCookie, token)
         .then( action(() => {this.token = token}) )
+        .then(() => userStore.pullCurrentUser())
         .finally( action(() => {this.isLoading = false}) );
     }
 
     @action logout() {
         this.isLoading = true;
-        AsyncStorage.removeItem('authToken')
+        AsyncStorage.removeItem(authCookie)
         .then( action(() => {this.token = undefined}) )
+        .then(() => userStore.forgetCurrentUser())
         .finally( action(() => {this.isLoading = false}) );
     }
 
     @action loadToken() {
         this.isLoading = true;
-        AsyncStorage.getItem('authToken')
+        AsyncStorage.getItem(authCookie)
         .then( action((token) => {this.token = token}) )
+        .then(() => this.token ? userStore.pullCurrentUser() : null)
         .finally( action(() => {this.isLoading = false}) );
     }
 

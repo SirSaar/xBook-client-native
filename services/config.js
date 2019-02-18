@@ -14,5 +14,3 @@ export const handleErrors = (response) => {
 }
 
 export const json = response => response.json();
-
-export const serverUrl = 'https://glacial-fortress-14735.herokuapp.com';
