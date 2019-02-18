@@ -2,10 +2,10 @@ import React from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
-  StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
+import { brandColor } from "../styles/base";
 
 export default class AuthLoading extends React.Component {
   constructor(props) {
@@ -21,14 +21,15 @@ export default class AuthLoading extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <ActivityIndicator color="white" size="large" />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: { 
+  container: {
+    backgroundColor: brandColor.primary,
     flex: 1,
     alignItems: 'center', 
     justifyContent: 'center'
