@@ -6,7 +6,10 @@ import {
   View,
 } from 'react-native';
 import { brandColor } from "../styles/base";
+import { inject, observer } from 'mobx-react';
 
+@inject('authStore')
+@observer
 export default class AuthLoading extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +17,7 @@ export default class AuthLoading extends React.Component {
   }
 
   _bootstrapAsync = async () => {
-    const authToken = await AsyncStorage.getItem('authToken');
+    const authToken = await this.props.authStore.loadToken();
     this.props.navigation.navigate(authToken ? 'App' : 'Auth');
   };
 

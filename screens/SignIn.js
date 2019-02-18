@@ -4,19 +4,22 @@ const parseUrl = require('url-parse');
 import { serverUrl } from '../config';
 import { SocialIcon } from "react-native-elements";
 import { textStyles, brandColor,dimensions } from "../styles/base";
+import { inject, observer } from 'mobx-react';
 
 const LOGIN_URL = serverUrl + "/api/auth/facebook";
 const SUCCESS_PATH = "/api/auth/success";
 const FAILED_PATH = "/api/auth/failed";
 
+@inject('authStore')
+@observer
 export default class SignIn extends Component {
-  state = { fbSignIn: false, loginFailed: false, isLoading: false }
+  state = { fbSignIn: false }
   render() {
-    if (this.state.isLoading) return (
+    if (this.props.authStore.isLoading) return (
       <View style={styles.container}>
         <ActivityIndicator size="large" />
       </View>
-    )
+    );
     if (this.state.fbSignIn) {
       return (
         <WebView
@@ -28,13 +31,12 @@ export default class SignIn extends Component {
           startInLoadingState={true}
           scalesPageToFit={true}
         />
-      )
+      );
     }
     return (
       <View style={[styles.container, {backgroundColor: brandColor.primary}]}>
         <View style={{width: dimensions.fullWidth*6/8}}>
           <Text style={[textStyles.brandTitle, { marginBottom: 45 }]}>xBook</Text>
-          {this.state.loginFailed && <Text>There was an issue during log in</Text>}
           <SocialIcon
             title='Sign In With Facebook'
             button
@@ -51,7 +53,6 @@ export default class SignIn extends Component {
 
     if (url.pathname == SUCCESS_PATH) {
       const authToken = url.query['auth_token'];
-      this.setState({ isLoading: true })
       this.onSuccess(authToken);
     }
 
@@ -61,13 +62,12 @@ export default class SignIn extends Component {
   }
 
   onFailed = async () => {
-    this.setState({
-      loginFailed: true
-    });
+    this.setState({fbSignIn:false});
+    // TODO: open snackbar with message
   }
 
-  onSuccess = async (authToken) => {
-    await AsyncStorage.setItem('authToken', authToken);
+  onSuccess = async (token) => {
+    await this.props.authStore.setToken(token);
     this.props.navigation.navigate('App');
   }
 

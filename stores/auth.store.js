@@ -1,4 +1,4 @@
-import {observable, autorun} from 'mobx';
+import {observable, autorun, action} from 'mobx';
 import { AsyncStorage } from 'react-native';
 import { authCookie } from "../config";
 import userStore from './user.store';
@@ -33,4 +33,4 @@ class AuthStore {
 
 }
 
-export default new UserStore();
+export default new AuthStore();

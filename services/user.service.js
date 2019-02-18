@@ -1,18 +1,27 @@
 import { getBook } from "./bookDetails.service";
-import { headers, handleErrors, json } from './config';
+import { getHeaders, handleErrors, json } from './helpers';
 import { serverUrl } from '../config';
+import authStore from '../stores/auth.store';
+
+const headers = getHeaders(authStore.token);
 
 const userApi = '/api/user';
 const userUrl = serverUrl + userApi;
 const booksUrl = userUrl + '/books';
 
 const populateUserBooks = async (user) => {
-    user.books.map(book => book.data = await getBook(book.id));
+    user.books = await Promise.all(user.books.map(async (book) => {
+        book.data = await getBook(book.id);
+        return book;
+    } ) );
     return user;
 }
 
 const populateUsersBooks = async (users) => {
-    const newUsers = users.map( user => user.books.map(book => await getBook(book.id)) );
+    const newUsers = await users.map( async (user) => {
+        user.books = await Promise.all( user.books.map(book => getBook(book.id)) )
+        return user;
+    });
     return newUsers;
 }
 

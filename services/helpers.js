@@ -1,10 +1,8 @@
-import { token } from '../stores/auth.store';
-
-export const headers = {
+export const getHeaders = (token) => { return {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`, 
-};
+    'Authorization': token && `Bearer ${token}`
+} };
 
 export const handleErrors = (response) => {
     if (!response.ok) {
