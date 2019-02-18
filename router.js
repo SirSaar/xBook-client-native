@@ -63,7 +63,7 @@ const AppNavigator = createBottomTabNavigator({
     'Giveaway': {
         screen: AddBookStack,
         navigationOptions: {
-            tabBarLabel: 'GiveAway',
+            tabBarLabel: 'Giveaway',
             tabBarIcon: ({ tintColor }) => <Icon name='library-books' type='MaterialIcons' size={24}
                 color={tintColor} />
         }
@@ -93,11 +93,16 @@ const AppNavigator = createBottomTabNavigator({
         }
     });
 
-const AuthStack = createStackNavigator({ SignIn: SignIn });
+const AuthStack = createStackNavigator({ SignIn: SignIn },{
+    headerMode: 'none'
+});
+const AuthLoadingStack = createStackNavigator({ AuthLoading: AuthLoading },{
+    headerMode: 'none'
+});
 
 const AuthNavigator = createSwitchNavigator(
     {
-        AuthLoading: AuthLoading,
+        AuthLoading: AuthLoadingStack,
         Auth: AuthStack,
         App: AppNavigator,
     }

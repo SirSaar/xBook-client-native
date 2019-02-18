@@ -12,7 +12,7 @@ export default class AddBook extends React.Component {
 
     return book && (
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'stretch', backgroundColor: layoutColor.background }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: layoutColor.background }}>
           <BookCard
           title={book.title}
           author={book.author}
@@ -20,12 +20,12 @@ export default class AddBook extends React.Component {
             <View style={{ marginTop: 8}}>
               <Button
                     icon={<Icon name='library-add' type='MaterialIcons' color='#ffffff' containerStyle={{marginRight: 5}} />}
-                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 10, backgroundColor: brandColor.background}}
+                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 10, backgroundColor: brandColor.primary}}
                     title='Add to Giveaway'
                     onPress={()=>console.log('h')} />
               <Button
                   icon={<Icon name='ios-book' type='ionicon' color='#ffffff' containerStyle={{marginRight: 7}} />}
-                  buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: brandColor.background}}
+                  buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: brandColor.primary}}
                   title='Read'
                   onPress={()=>console.log()} />
             </View>

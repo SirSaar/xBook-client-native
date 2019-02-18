@@ -39,9 +39,11 @@ export const textSize = {
   md: 10,
   lg: 12,
   xl: 18,
+  brand: 36,
 }
 
 export const textStyles = StyleSheet.create({
+  brandTitle: { fontSize: textSize.brand, fontWeight: 'bold', color: 'white' ,textAlign: 'center', },
   header: { fontSize: textSize.xl, fontWeight: 'normal', color: textColor.title  },
   title: { fontSize: textSize.lg, fontWeight: boldWeight, textAlign: 'center', color: textColor.title },
   subtitle: { fontSize: textSize.md, textAlign: 'center', color: textColor.subtitle },
