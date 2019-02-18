@@ -6,29 +6,14 @@ const userApi = '/api/user';
 const userUrl = serverUrl + userApi;
 const booksUrl = userUrl + '/books';
 
-
-export const getAvailableIds = async (userId) => {
-    const books = users[userId].books;
-    return books.filter(book => book.available).map(book => book.id);
+const populateUserBooks = async (user) => {
+    user.books.map(book => book.data = await getBook(book.id));
+    return user;
 }
 
-export const getUnavailableIds = async (userId) => {
-    const books = users[userId].books;
-    return books.filter(book => !book.available).map(book => book.id);
-}
-
-export const getUnavailable = async (userId) => {
-    return getUnavailableIds(userId).then(getBooks);
-}
-
-export const getAvailable = async (userId) => {
-    return getAvailableIds(userId).then(getBooks);
-}
-
-export const getBalance = async (userId) => {
-    const given = users[userId];
-    const received = users[userId];
-    return {given, received};
+const populateUsersBooks = async (users) => {
+    const newUsers = users.map( user => user.books.map(book => await getBook(book.id)) );
+    return newUsers;
 }
 
 export const updateBook = async (id, available) => {
@@ -56,9 +41,19 @@ export const deleteBook = async (bookId) => {
 }
 
 export const getMyUser = () => {
-    return fetch(userUrl + '/me').then(handleErrors).then(json);
+    return fetch(userUrl + '/me')
+    .then(handleErrors).then(json)
+    .then(populateUserBooks);
 }
 
 export const getUsers = (page = 0) => {
-    return fetch(`${userUrl}?page=${page}`).then(handleErrors).then(json);
+    return fetch(`${userUrl}?page=${page}`)
+    .then(handleErrors).then(json)
+    .then(populateUsersBooks);
+}
+
+export const getUser = (id) => {
+    return fetch(`${userUrl}/${id}`)
+    .then(handleErrors).then(json)
+    .then(populateUserBooks);
 }

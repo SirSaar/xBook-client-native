@@ -1,23 +1,34 @@
 import {observable, autorun} from 'mobx';
-import { getMyUser, getUsers, addBook, updateBook, deleteBook } from "../services/user.service";
+import { getMyUser, getUsers, addBook, updateBook, deleteBook, getUser } from "../services/user.service";
 
 export class UserStore {
-    @observable users = [];
+    @observable users = [];     // users.books will be with only available books
     @observable isLoadingUsers;
-    @observable currentUser;
+    @observable currentUser;    // users.books will be with all books
     @observable isLoadingCurrentUser;
-    page = 0;
-    
+    @observable selectedUser;
+    @observable isLoadingSelectedUser;
+    usersPage = 0;
+
     @action pullCurrentUser() {
         this.isLoadingCurrentUser = true;
-        return getMyUser().then( action(user => { this.currentUser = user }) )
+        return getMyUser()
+        .then( action(user => { this.currentUser = user }) )
         .finally(action(() => { this.isLoadingCurrentUser = false }));
+    }
+
+    @action pullSelectedUser(id) {
+        this.isLoadingSelectedUser = true;
+        return getUser(id)
+        .then( action(user => { this.selectedUser = user }) )
+        .finally(action(() => { this.isLoadingSelectedUser = false }));
     }
 
     @action pullUsers() {
         this.isLoadingUsers = true;
-        return getUsers(page).then( action(users => { this.users.push(users) }) )
-        .finally(action(() => { this.isLoadingUsers = false; this.page++; }));
+        return getUsers(usersPage)
+        .then( action(users => { this.users.push(users) }) )
+        .finally(action(() => { this.isLoadingUsers = false; this.usersPage++; }));
     }
 
     @action addBook(id, available) {
@@ -40,4 +51,5 @@ export class UserStore {
         return deleteBook(id)
         .catch(action(err => { this.pullCurrentUser(); throw err }));
     }
+
 }

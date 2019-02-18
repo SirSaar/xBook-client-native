@@ -7,7 +7,3 @@ export const getBook = (id) => {
 export const searchBook = (bookName) => {
     return googleBooks.searchBook(bookName);
 }
-
-export const getBooks = (booksId) => {
-    return Promise.all(booksId.map(getBook))
-}
