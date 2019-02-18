@@ -1,40 +1,68 @@
-import { users, currentUser } from "../models/users";
-import { getBooks } from "./bookDetails.service";
+import { getBook } from "./bookDetails.service";
+import { getHeaders, handleErrors, json } from './helpers';
+import { serverUrl } from '../config';
+import authStore from '../stores/auth.store';
 
-export const getAvailableIds = async (userId) => {
-    const books = users[userId].books;
-    return books.filter(book => book.available).map(book => book.id);
+const headers = getHeaders(authStore.token);
+
+const userApi = '/api/user';
+const userUrl = serverUrl + userApi;
+const booksUrl = userUrl + '/books';
+
+const populateUserBooks = async (user) => {
+    user.books = await Promise.all(user.books.map(async (book) => {
+        book.data = await getBook(book.id);
+        return book;
+    } ) );
+    return user;
 }
 
-export const getUnavailableIds = async (userId) => {
-    const books = users[userId].books;
-    return books.filter(book => !book.available).map(book => book.id);
+const populateUsersBooks = async (users) => {
+    const newUsers = await users.map( async (user) => {
+        user.books = await Promise.all( user.books.map(book => getBook(book.id)) )
+        return user;
+    });
+    return newUsers;
 }
 
-export const getUnavailable = async (userId) => {
-    return getUnavailableIds(userId).then(getBooks);
+export const updateBook = async (id, available) => {
+    return fetch(booksUrl, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify({id, available})
+    }).then(handleErrors).then(json);
 }
 
-export const getAvailable = async (userId) => {
-    return getAvailableIds(userId).then(getBooks);
-}
-
-export const getBalance = async (userId) => {
-    const given = users[userId];
-    const received = users[userId];
-    return {given, received};
-}
-
-export const changeBookStatus = async (bookId, status) => {
-    const book = users[currentUser].books.find(book => book.id === bookId);
-    book.status = BOOK_STATUS[status];
-}
-
-export const addBook = async (bookId, status) => {
-    users[currentUser].books.push({id: bookId, status});
+export const addBook = async (id, available) => {
+    return fetch(booksUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({id, available})
+    }).then(handleErrors).then(json);
 }
 
 export const deleteBook = async (bookId) => {
-    const index = users[currentUser].books.findIndex(book => book.id === bookId);
-    users[currentUser].books.splice(index,1);
+    return fetch(booksUrl + '/' + bookId, {
+        method: 'DELETE',
+        headers,
+        body: JSON.stringify({})
+    }).then(handleErrors).then(json);
+}
+
+export const getMyUser = () => {
+    return fetch(userUrl + '/me')
+    .then(handleErrors).then(json)
+    .then(populateUserBooks);
+}
+
+export const getUsers = (page = 0) => {
+    return fetch(`${userUrl}?page=${page}`)
+    .then(handleErrors).then(json)
+    .then(populateUsersBooks);
+}
+
+export const getUser = (id) => {
+    return fetch(`${userUrl}/${id}`)
+    .then(handleErrors).then(json)
+    .then(populateUserBooks);
 }

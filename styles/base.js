@@ -48,4 +48,9 @@ export const textStyles = StyleSheet.create({
   title: { fontSize: textSize.lg, fontWeight: boldWeight, textAlign: 'center', color: textColor.title },
   subtitle: { fontSize: textSize.md, textAlign: 'center', color: textColor.subtitle },
   normal: {fontSize: textSize.md, color: textColor.normal}
+});
+
+export const cardTextStyles = StyleSheet.create({
+  title: { fontSize: textSize.xl, fontWeight: boldWeight, textAlign: 'center', color: textColor.title },
+  subtitle: { fontSize: textSize.lg, textAlign: 'center', color: textColor.subtitle },
 })

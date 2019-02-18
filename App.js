@@ -1,11 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppContainer } from './router';
+import { Provider } from 'mobx-react';
+
+import userStore from './stores/user.store';
+import authStore from './stores/auth.store';
+
+const stores = {
+  userStore,
+  authStore
+};
 
 export default class App extends React.Component {
   render() {
     return (
-      <AppContainer />
+      <Provider {...stores}>
+        <AppContainer />
+      </Provider>
     );
   }
 }
