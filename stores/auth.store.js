@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { authCookie } from "../config";
 import userStore from './user.store';
 
-export class AuthStore {
+class AuthStore {
     @observable token;
     @observable isLoading;
 
@@ -32,3 +32,5 @@ export class AuthStore {
     }
 
 }
+
+export default new UserStore();
