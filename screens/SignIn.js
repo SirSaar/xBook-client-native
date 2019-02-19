@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Image, Button, StyleSheet, Text, View, WebView, ActivityIndicator, AsyncStorage } from 'react-native';
+import { StyleSheet, View, WebView, ActivityIndicator, Text } from 'react-native';
 const parseUrl = require('url-parse');
 import { serverUrl } from '../config';
-import { SocialIcon } from "react-native-elements";
-import { textStyles, brandColor,dimensions } from "../styles/base";
+
+import { textStyles, brandColor, dimensions } from "../styles/base";
 import { inject, observer } from 'mobx-react';
+import { Title, Snackbar,DefaultTheme } from 'react-native-paper';
+import { SocialIcon } from "react-native-elements";
 
 const LOGIN_URL = serverUrl + "/api/auth/facebook";
 const SUCCESS_PATH = "/api/auth/success";
@@ -13,13 +15,8 @@ const FAILED_PATH = "/api/auth/failed";
 @inject('authStore')
 @observer
 export default class SignIn extends Component {
-  state = { fbSignIn: false }
+  state = { fbSignIn: false, failed: true }
   render() {
-    if (this.props.authStore.isLoading) return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
     if (this.state.fbSignIn) {
       return (
         <WebView
@@ -34,16 +31,26 @@ export default class SignIn extends Component {
       );
     }
     return (
-      <View style={[styles.container, {backgroundColor: brandColor.primary}]}>
-        <View style={{width: dimensions.fullWidth*6/8}}>
-          <Text style={[textStyles.brandTitle, { marginBottom: 45 }]}>xBook</Text>
+      <View style={[styles.container]}>
+        <View style={{ marginBottom: 45 }}>
+          <Text style={{ fontSize: 60 }}>xBook</Text>
+        </View>
+        <View style={{width: 250}}> 
           <SocialIcon
-            title='Sign In With Facebook'
             button
+            raised={false}
+            title='Continue with Facebook'
             type='facebook'
             onPress={this._onFbSignIn}
+            loading={this.props.authStore.isLoading}
           />
         </View>
+        <Snackbar
+          visible={this.state.failed}
+          onDismiss={() => this.setState({ failed: false })}
+        >
+          Login failed...
+      </Snackbar>
       </View>
     );
   }
@@ -62,8 +69,7 @@ export default class SignIn extends Component {
   }
 
   onFailed = async () => {
-    this.setState({fbSignIn:false});
-    // TODO: open snackbar with message
+    this.setState({ fbSignIn: false, failed: true });
   }
 
   onSuccess = async (token) => {
@@ -78,8 +84,10 @@ export default class SignIn extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: DefaultTheme.colors.background,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginHorizontal: 10
   }
 });

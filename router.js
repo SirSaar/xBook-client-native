@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createAppContainer, createStackNavigator, createBottomTabNavigator, createSwitchNavigator, withNavigation } from 'react-navigation';
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { Icon } from 'react-native-elements';
 
 import SearchBook from './screens/SearchBook';
@@ -10,6 +11,7 @@ import AuthLoading from './screens/AuthLoading';
 import SignIn from './screens/SignIn';
 
 import { brandColor, layoutColor, textColor, textSize, textStyles } from "./styles/base";
+import { DefaultTheme } from 'react-native-paper';
 
 const AddBookStack = createStackNavigator({
     SearchBook: {
@@ -28,14 +30,14 @@ const AddBookStack = createStackNavigator({
         defaultNavigationOptions: {
             headerStyle: {
                 elevation: 1,
+                backgroundColor: DefaultTheme.colors.primary
             },
-            headerTitleStyle: {
-                ...textStyles.header
-            }
+            headerTintColor: 'white',
+            headerTitleStyle: DefaultTheme.fonts.medium
         }
     });
 
-const AppNavigator = createBottomTabNavigator({
+const AppNavigator = createMaterialBottomTabNavigator({
     'Explore': {
         screen: Explore,
         navigationOptions: {
@@ -79,24 +81,16 @@ const AppNavigator = createBottomTabNavigator({
 
 },
     {
-        tabBarOptions: {
-            activeTintColor: brandColor.primary,
-            inactiveTintColor: textColor.subtitle,
-            style: {
-                backgroundColor: 'white',
-                borderTopWidth: 0,
-                shadowOffset: { width: 5, height: 3 },
-                shadowColor: 'black',
-                shadowOpacity: 0.5,
-                elevation: 5
-            }
-        }
+        initialRouteName: 'Explore',
+        // activeColor: '#f0edf6',
+        // inactiveColor: '#3e2465',
+        // barStyle: { backgroundColor: '#694fad' },
     });
 
-const AuthStack = createStackNavigator({ SignIn: SignIn },{
+const AuthStack = createStackNavigator({ SignIn: SignIn }, {
     headerMode: 'none'
 });
-const AuthLoadingStack = createStackNavigator({ AuthLoading: AuthLoading },{
+const AuthLoadingStack = createStackNavigator({ AuthLoading: AuthLoading }, {
     headerMode: 'none'
 });
 

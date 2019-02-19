@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { brandColor } from "../styles/base";
 import { inject, observer } from 'mobx-react';
+import { DefaultTheme } from 'react-native-paper';
 
 @inject('authStore')
 @observer
@@ -18,6 +19,7 @@ export default class AuthLoading extends React.Component {
 
   _bootstrapAsync = async () => {
     const authToken = await this.props.authStore.loadToken();
+    console.log('loaded token: ',authToken)
     this.props.navigation.navigate(authToken ? 'App' : 'Auth');
   };
 
@@ -32,7 +34,7 @@ export default class AuthLoading extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: brandColor.primary,
+    backgroundColor: DefaultTheme.colors.background,
     flex: 1,
     alignItems: 'center', 
     justifyContent: 'center'

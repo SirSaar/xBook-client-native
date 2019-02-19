@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppContainer } from './router';
 import { Provider } from 'mobx-react';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import userStore from './stores/user.store';
 import authStore from './stores/auth.store';
@@ -15,7 +16,9 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider {...stores}>
-        <AppContainer />
+        <PaperProvider>
+          <AppContainer />
+        </PaperProvider>
       </Provider>
     );
   }

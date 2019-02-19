@@ -1,5 +1,5 @@
 import {observable, autorun, action} from 'mobx';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from "react-native"
 import { authCookie } from "../config";
 import userStore from './user.store';
 
