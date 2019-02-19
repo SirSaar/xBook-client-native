@@ -1,14 +1,26 @@
-import {observable, autorun, action} from 'mobx';
+import {observable, autorun, action, computed} from 'mobx';
 import { getMyUser, getUsers, addBook, updateBook, deleteBook, getUser } from "../services/user.service";
+
+const getBooks = (user,available) => user.books.filter(
+    book => book.available == available
+).map(book=>book.id);
 
 class UserStore {
     @observable users = [];     // users.books will be with only available books
     @observable isLoadingUsers;
-    @observable currentUser;    // users.books will be with all books
+    @observable currentUser;    // users.books will be with all books: {book,available}
     @observable isLoadingCurrentUser;
     @observable selectedUser;
     @observable isLoadingSelectedUser;
     usersPage = 0;
+
+    @computed get myAvailableBooks() {
+        return getBooks(this.currentUser, true)
+    }
+
+    @computed get myNonAvailableBooks() {
+        return getBooks(this.currentUser, false)
+    }
 
     @action pullCurrentUser() {
         this.isLoadingCurrentUser = true;

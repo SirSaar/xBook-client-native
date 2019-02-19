@@ -15,9 +15,9 @@ const FAILED_PATH = "/api/auth/failed";
 @inject('authStore')
 @observer
 export default class SignIn extends Component {
-  state = { fbSignIn: false, failed: true }
+  state = { fbView: false, failed: false }
   render() {
-    if (this.state.fbSignIn) {
+    if (this.state.fbView) {
       return (
         <WebView
           ref={'webview'}
@@ -33,12 +33,11 @@ export default class SignIn extends Component {
     return (
       <View style={[styles.container]}>
         <View style={{ marginBottom: 45 }}>
-          <Text style={{ fontSize: 60 }}>xBook</Text>
+          <Text style={{ fontSize: 75 }}>xBook</Text>
         </View>
         <View style={{width: 250}}> 
           <SocialIcon
             button
-            raised={false}
             title='Continue with Facebook'
             type='facebook'
             onPress={this._onFbSignIn}
@@ -69,7 +68,7 @@ export default class SignIn extends Component {
   }
 
   onFailed = async () => {
-    this.setState({ fbSignIn: false, failed: true });
+    this.setState({ fbView: false, failed: true });
   }
 
   onSuccess = async (token) => {
@@ -78,7 +77,7 @@ export default class SignIn extends Component {
   }
 
   _onFbSignIn = () => {
-    this.setState({ fbSignIn: true })
+    this.setState({ fbView: true })
   }
 }
 
@@ -88,6 +87,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10
   }
 });

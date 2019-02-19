@@ -5,7 +5,7 @@ import userStore from './user.store';
 
 class AuthStore {
     @observable token;
-    @observable isLoading;
+    @observable isLoading = false;
 
     @action setToken(token) {
         this.isLoading = true;

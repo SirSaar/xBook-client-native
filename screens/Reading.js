@@ -17,15 +17,15 @@ import BookTile from '../components/BookTile';
 import { getReading, changeBookStatus } from "../services/user.service";
 import { currentUser, BOOK_STATUS } from "../models/users";
 import { brandColor, layoutColor } from "../styles/base";
+import { inject, observer } from "mobx-react";
 
+@inject('userStore')
+@observer
 class Reading extends Component {
-    state = {books: []}
+
     constructor(props) {
         super(props);
-        getReading(currentUser)
-        .then(books => {
-            this.setState({books});
-        });
+        this.books = props.userStore.currentUser.myNonAvailableBooks;
     }
 
     _onAddToGiveaway = async (id) => {
