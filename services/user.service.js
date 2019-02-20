@@ -14,7 +14,6 @@ const populateUserBooks = async (user) => {
         book.data = await getBook(book.id);
         return book;
     } ) );
-    console.log('populateUserBooks',user)
     return user;
 }
 

@@ -31,9 +31,8 @@ class AuthStore {
 
     @action _saveToken = (token) => {
         this.token = token;
-        console.log('_saveToken',token)
-        token && userStore.pullCurrentUser();
-        return Promise.resolve(token);
+        console.log(this.token)
+        return Promise.resolve(token ? userStore.pullCurrentUser() : null);
     }
 
 }

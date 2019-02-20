@@ -12,21 +12,17 @@ import { DefaultTheme } from 'react-native-paper';
 @inject('authStore')
 @observer
 export default class AuthLoading extends React.Component {
-  constructor(props) {
-    super(props);
-    this._bootstrapAsync();
-  }
 
-  _bootstrapAsync = async () => {
-    const authToken = await this.props.authStore.loadToken();
-    console.log('loaded token: ',authToken)
-    this.props.navigation.navigate(authToken ? 'App' : 'Auth');
+  componentDidMount() {
+    this.props.authStore.loadToken().then(authToken =>
+      this.props.navigation.navigate(authToken ? 'App' : 'Auth')
+    );
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator color="white" size="large" />
+        <ActivityIndicator size="large" />
       </View>
     );
   }

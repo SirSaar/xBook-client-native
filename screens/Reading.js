@@ -12,7 +12,7 @@ import {
     Image,
     Dimensions
 } from "react-native";
-import BookTile from '../components/BookTile';
+import BookCard from '../components/BookCard';
 
 import { brandColor, layoutColor } from "../styles/base";
 import { inject, observer } from "mobx-react";
@@ -25,6 +25,7 @@ class Reading extends Component {
 
     render() {
         const books = this.props.userStore.myAvailableBooks;
+        console.log('booksb:',books)
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: layoutColor.background }}>
                 <ScrollView>
@@ -32,15 +33,12 @@ class Reading extends Component {
                     {
                         !!books.length ?
                         books.map(book => 
-                            <BookTile key={book.id}
+                            <BookCard key={book.id}
                             title={book.title}
                             author={book.author}
                             thumbnail={book.thumbnail}
                             >
-                                <View style={{padding: 8, paddingBottom: 0}}>
-                                    <Button onPress={()=> this._onAddToGiveaway(book.id)} color={brandColor.primary} title="Add to Giveaway"/>
-                                </View>
-                            </BookTile>
+                            </BookCard>
                         ) :
                         (<Text>There is no books</Text>)
                     }

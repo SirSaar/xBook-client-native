@@ -3,7 +3,7 @@ import * as userApi from "../services/user.service";
 
 const _getBooks = (user,available) => user.books.filter(
     book => book.available == available
-).map(book=>book.id);
+).map(book=>book.data);
 
 class UserStore {
     @observable users = [];     // users.books will be with only available books
@@ -14,18 +14,18 @@ class UserStore {
     @observable isLoadingSelectedUser;
     usersPage = 0;
 
-    @computed get myAvailableBooks() {
+    @computed get availableBooks() {
         return _getBooks(this.currentUser, true)
     }
 
-    @computed get myNonAvailableBooks() {
+    @computed get nonAvailableBooks() {
         return _getBooks(this.currentUser, false)
     }
 
     @action pullCurrentUser() {
         this.isLoadingCurrentUser = true;
         return userApi.getMyUser()
-        .then( action(user => { this.currentUser = user; console.log('pullUser:',user) }) )
+        .then( action(user => { this.currentUser = user; }) )
         .finally(action(() => { this.isLoadingCurrentUser = false; }));
     }
 
