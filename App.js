@@ -8,7 +8,7 @@ import userStore from './stores/user.store';
 import authStore from './stores/auth.store';
 
 import { configure } from "mobx";
-configure({ enforceActions: 'always' });
+configure({ enforceActions: 'observed' });
 
 const stores = {
   userStore,

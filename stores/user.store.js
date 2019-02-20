@@ -22,7 +22,7 @@ class UserStore {
         return _getBooks(this.currentUser, false)
     }
 
-    @action pullCurrentUser() {
+    @action pullCurrentUser = () => {
         this.isLoadingCurrentUser = true;
         return userApi.getMyUser()
         .then( action(user => { this.currentUser = user; }) )

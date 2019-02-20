@@ -7,14 +7,14 @@ class AuthStore {
     @observable token;
     @observable isLoading = false;
 
-    @action setToken(token) {
+    @action setToken = (token) => {
         this.isLoading = true;
         return AsyncStorage.setItem(authCookie, token)
         .then( this._saveToken )
         .finally( action(() => {this.isLoading = false}) );
     }
 
-    @action logout() {
+    @action logout = () => {
         this.isLoading = true;
         return AsyncStorage.removeItem(authCookie)
         .then( this._saveToken(null) )
@@ -22,17 +22,18 @@ class AuthStore {
         .finally( action(() => {this.isLoading = false}) );
     }
 
-    @action loadToken() {
+    @action loadToken = () => {
         this.isLoading = true;
         return AsyncStorage.getItem(authCookie)
         .then( this._saveToken )
-        .finally( action(() => {this.isLoading = false}) );
+        .finally( action((x) => {this.isLoading = false; return x}) );
     }
 
     @action _saveToken = (token) => {
+        if(!token) return null;
         this.token = token;
-        console.log(this.token)
-        return Promise.resolve(token ? userStore.pullCurrentUser() : null);
+        return token
+        return userStore.pullCurrentUser().then(()=>this.token);
     }
 
 }

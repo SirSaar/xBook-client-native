@@ -13,9 +13,11 @@ import { DefaultTheme } from 'react-native-paper';
 @observer
 export default class AuthLoading extends React.Component {
 
-  componentDidMount() {
-    this.props.authStore.loadToken().then(authToken =>
-      this.props.navigation.navigate(authToken ? 'App' : 'Auth')
+  componentDidMount = () => {
+    this.props.authStore.loadToken().then(authToken => {
+      console.log('AuthLoading',authToken);
+      this.props.navigation.navigate(authToken ? 'App' : 'Auth');
+    }
     );
   };
 
