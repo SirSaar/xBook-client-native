@@ -25,7 +25,7 @@ class UserStore {
     @action pullCurrentUser = () => {
         this.isLoadingCurrentUser = true;
         return userApi.getMyUser()
-        .then( action(user => { this.currentUser = user; }) )
+        .then( action(user => { this.currentUser = user; console.log(currentUser) }) )
         .finally(action(() => { this.isLoadingCurrentUser = false; }));
     }
 

@@ -24,8 +24,7 @@ class Reading extends Component {
     _onAddToGiveaway = (id) => this.props.userStore.updateBook(id, true);
 
     render() {
-        const books = this.props.userStore.myAvailableBooks;
-        console.log('booksb:',books)
+        const books = this.props.userStore.availableBooks;
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: layoutColor.background }}>
                 <ScrollView>

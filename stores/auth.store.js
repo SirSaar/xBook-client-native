@@ -32,7 +32,6 @@ class AuthStore {
     @action _saveToken = (token) => {
         if(!token) return null;
         this.token = token;
-        return token
         return userStore.pullCurrentUser().then(()=>this.token);
     }
 
