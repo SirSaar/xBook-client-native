@@ -1,7 +1,7 @@
 import {observable, autorun, action, computed} from 'mobx';
-import { getMyUser, getUsers, addBook, updateBook, deleteBook, getUser } from "../services/user.service";
+import * as userApi from "../services/user.service";
 
-const getBooks = (user,available) => user.books.filter(
+const _getBooks = (user,available) => user.books.filter(
     book => book.available == available
 ).map(book=>book.id);
 
@@ -15,44 +15,44 @@ class UserStore {
     usersPage = 0;
 
     @computed get myAvailableBooks() {
-        return getBooks(this.currentUser, true)
+        return _getBooks(this.currentUser, true)
     }
 
     @computed get myNonAvailableBooks() {
-        return getBooks(this.currentUser, false)
+        return _getBooks(this.currentUser, false)
     }
 
     @action pullCurrentUser() {
         this.isLoadingCurrentUser = true;
-        return getMyUser()
-        .then( action(user => { this.currentUser = user }) )
-        .finally(action(() => { this.isLoadingCurrentUser = false }));
+        return userApi.getMyUser()
+        .then( action(user => { this.currentUser = user; console.log('pullUser:',user) }) )
+        .finally(action(() => { this.isLoadingCurrentUser = false; }));
     }
 
     @action pullSelectedUser(id) {
         this.isLoadingSelectedUser = true;
-        return getUser(id)
+        return userApi.getUser(id)
         .then( action(user => { this.selectedUser = user }) )
         .finally(action(() => { this.isLoadingSelectedUser = false }));
     }
 
     @action pullUsers() {
         this.isLoadingUsers = true;
-        return getUsers(usersPage)
+        return userApi.getUsers(usersPage)
         .then( action(users => { this.users.push(users) }) )
         .finally(action(() => { this.isLoadingUsers = false; this.usersPage++; }));
     }
 
     @action addBook(id, available) {
         this.currentUser.books.push({id: id, available});
-        return addBook(id, isAvailable)
+        return userApi.addBook(id, isAvailable)
         .catch(action(err => { this.pullCurrentUser(); throw err }));
     }
 
     @action updateBook(id, available) {
         const book = this.currentUser.books.find(book => book.id === id);
         book.available = available;
-        return updateBook(id, isAvailable)
+        return userApi.updateBook(id, isAvailable)
         .catch(action(err => { this.pullCurrentUser(); throw err }));
     }
 
@@ -60,7 +60,7 @@ class UserStore {
     @action deleteBook(id) {
         const index = this.currentUser.books.findIndex(book => book.id === id);
         if(index > -1) this.currentUser.books.splice(index,1);
-        return deleteBook(id)
+        return userApi.deleteBook(id)
         .catch(action(err => { this.pullCurrentUser(); throw err }));
     }
 

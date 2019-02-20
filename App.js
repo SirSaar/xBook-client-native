@@ -7,6 +7,9 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import userStore from './stores/user.store';
 import authStore from './stores/auth.store';
 
+import { configure } from "mobx";
+configure({ enforceActions: 'always' });
+
 const stores = {
   userStore,
   authStore

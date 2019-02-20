@@ -3,7 +3,7 @@ import { getHeaders, handleErrors, json } from './helpers';
 import { serverUrl } from '../config';
 import authStore from '../stores/auth.store';
 
-const headers = getHeaders(authStore.token);
+const headers = () => getHeaders(authStore.token);
 
 const userApi = '/api/user';
 const userUrl = serverUrl + userApi;
@@ -14,18 +14,19 @@ const populateUserBooks = async (user) => {
         book.data = await getBook(book.id);
         return book;
     } ) );
+    console.log('populateUserBooks',user)
     return user;
 }
 
 const populateUsersBooks = async (users) => {
-    const newUsers = await users.map( populateUserBooks );
+    const newUsers = await Promise.all(users.map( populateUserBooks ));
     return newUsers;
 }
 
 export const updateBook = async (id, available) => {
     return fetch(booksUrl, {
         method: 'PUT',
-        headers,
+        headers: headers(),
         body: JSON.stringify({id, available})
     }).then(handleErrors).then(json);
 }
@@ -33,7 +34,7 @@ export const updateBook = async (id, available) => {
 export const addBook = async (id, available) => {
     return fetch(booksUrl, {
         method: 'POST',
-        headers,
+        headers: headers(),
         body: JSON.stringify({id, available})
     }).then(handleErrors).then(json);
 }
@@ -41,25 +42,31 @@ export const addBook = async (id, available) => {
 export const deleteBook = async (bookId) => {
     return fetch(booksUrl + '/' + bookId, {
         method: 'DELETE',
-        headers,
+        headers: headers(),
         body: JSON.stringify({})
     }).then(handleErrors).then(json);
 }
 
 export const getMyUser = () => {
-    return fetch(userUrl + '/me')
+    return fetch(userUrl + '/me', {
+        headers: headers()
+    })
     .then(handleErrors).then(json)
     .then(populateUserBooks);
 }
 
 export const getUsers = (page = 0) => {
-    return fetch(`${userUrl}?page=${page}`)
+    return fetch(`${userUrl}?page=${page}`, {
+        headers: headers()
+    })
     .then(handleErrors).then(json)
     .then(populateUsersBooks);
 }
 
 export const getUser = (id) => {
-    return fetch(`${userUrl}/${id}`)
+    return fetch(`${userUrl}/${id}`, {
+        headers: headers()
+    })
     .then(handleErrors).then(json)
     .then(populateUserBooks);
 }

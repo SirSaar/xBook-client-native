@@ -1,3 +1,5 @@
+import authStore from "../stores/auth.store";
+
 export const getHeaders = (token) => { return {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
@@ -6,9 +8,12 @@ export const getHeaders = (token) => { return {
 
 export const handleErrors = (response) => {
     if (!response.ok) {
-        throw Error(response.statusText);
+        const error = Error(response.statusText);
+        console.log(error)
+        if(response.status === 401) authStore.logout();
+        throw error;
     }
-    return response;
+    return Promise.resolve(response);
 }
 
 export const json = response => response.json();

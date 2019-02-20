@@ -1,11 +1,12 @@
 /*
     take only the needed info from api
 */
-const cleanseBook = (book) => {
+const cleanseBook = (book, height = 160) => {
     const newBook={};
     newBook.id=book.id;
     newBook.title=book.volumeInfo.title;
-    newBook.thumbnail=book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail
+    newBook.thumbnail=book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail;
+    if(newBook.thumbnail) newBook.thumbnail += `&h=${height}`;
     newBook.author=book.volumeInfo.authors && book.volumeInfo.authors.join(', ');
     newBook.more=book.volumeInfo.infoLink;
     return newBook;

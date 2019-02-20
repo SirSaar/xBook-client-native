@@ -9,26 +9,31 @@ class AuthStore {
 
     @action setToken(token) {
         this.isLoading = true;
-        AsyncStorage.setItem(authCookie, token)
-        .then( action(() => {this.token = token}) )
-        .then(() => userStore.pullCurrentUser())
+        return AsyncStorage.setItem(authCookie, token)
+        .then( this._saveToken )
         .finally( action(() => {this.isLoading = false}) );
     }
 
     @action logout() {
         this.isLoading = true;
-        AsyncStorage.removeItem(authCookie)
-        .then( action(() => {this.token = undefined}) )
-        .then(() => userStore.forgetCurrentUser())
+        return AsyncStorage.removeItem(authCookie)
+        .then( this._saveToken(null) )
+        .then(userStore.forgetCurrentUser)
         .finally( action(() => {this.isLoading = false}) );
     }
 
     @action loadToken() {
         this.isLoading = true;
-        AsyncStorage.getItem(authCookie)
-        .then( action((token) => {this.token = token}) )
-        .then(() => this.token ? userStore.pullCurrentUser() : null)
+        return AsyncStorage.getItem(authCookie)
+        .then( this._saveToken )
         .finally( action(() => {this.isLoading = false}) );
+    }
+
+    @action _saveToken = (token) => {
+        this.token = token;
+        console.log('_saveToken',token)
+        token && userStore.pullCurrentUser();
+        return Promise.resolve(token);
     }
 
 }
