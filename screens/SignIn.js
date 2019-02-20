@@ -5,8 +5,7 @@ import { serverUrl } from '../config';
 
 import { textStyles, brandColor, dimensions } from "../styles/base";
 import { inject, observer } from 'mobx-react';
-import { Title, Snackbar,DefaultTheme } from 'react-native-paper';
-import { SocialIcon } from "react-native-elements";
+import { Title, Snackbar,DefaultTheme, Button } from 'react-native-paper';
 
 const LOGIN_URL = serverUrl + "/api/auth/facebook";
 const SUCCESS_PATH = "/api/auth/success";
@@ -36,13 +35,14 @@ export default class SignIn extends Component {
           <Text style={{ fontSize: 75 }}>xBook</Text>
         </View>
         <View style={{width: 250}}> 
-          <SocialIcon
-            button
-            title='Continue with Facebook'
-            type='facebook'
-            onPress={this._onFbSignIn}
+          <Button icon={{ uri: 'http://aboutreact.com/wp-content/uploads/2018/08/facebook.png.png'}}
+            mode="contained"
+            onPress={this._onFbSignIn} 
             loading={this.props.authStore.isLoading}
-          />
+            uppercase={false}
+            color='#485a96'>
+            Continue with Facebook
+          </Button>
         </View>
         <Snackbar
           visible={this.state.failed}

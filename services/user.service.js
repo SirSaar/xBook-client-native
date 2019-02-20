@@ -18,10 +18,7 @@ const populateUserBooks = async (user) => {
 }
 
 const populateUsersBooks = async (users) => {
-    const newUsers = await users.map( async (user) => {
-        user.books = await Promise.all( user.books.map(book => getBook(book.id)) )
-        return user;
-    });
+    const newUsers = await users.map( populateUserBooks );
     return newUsers;
 }
 
